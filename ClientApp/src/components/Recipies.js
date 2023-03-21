@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
 
 const Recipies = () => {
 
-    const [items, setItems] = useState([]);
-    const dataType = 1;
-
+    const [items, setItems] = useState(null);
+    const dataType = 80;
 
     useEffect(() => {
-        fetch(`recipie/${dataType}`)
+        fetch(`recipe/${dataType}`)
             .then((results) => {
                 return results.json();
             })
             .then(data => {
                 setItems(data);
             })
+            .catch(e => {console.log(e);})
     }, []);
 
     return (
         <main>
             {
-                (items != null) ? items.map((items) => <h3>{items.title}</h3>) : <div>Loading...</div>
+                (items != null) ? items.map((items) => <Link to="/">{items.title}</Link>): <div>Loading...</div>
             }
         </main>
-    )
+    ) 
 }
 export default Recipies;

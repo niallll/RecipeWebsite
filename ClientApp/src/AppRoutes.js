@@ -24,7 +24,12 @@ const AppRoutes = [
     {
       path: '/fetch-recipes',
       element: <Recipies />
-  }
+  },
+  {
+    path: '/recipe/:id',
+    element: <Recipies />
+}
+
 
 ];
 
