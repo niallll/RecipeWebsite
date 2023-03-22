@@ -11,11 +11,11 @@ export class NavMenu extends Component {
         <Navbar className="navbar" container light>
           <NavbarBrand tag={Link} to="/" className='navbarbrand'>Niall's Recipes</NavbarBrand>
           <div className='navbarlinks'>
+            <NavLink tag={Link} className="navlink" to="/fetch-recipes" >Recipies</NavLink>
+            <NavLink tag={Link} className="navlink" to="/how-to" >How To</NavLink>
             <NavLink tag={Link} className="navlink" to="/about">About</NavLink>
-            <NavLink tag={Link} className="navlink" to="/fetch-data">Fetch data</NavLink>
-            <NavLink tag={Link} className="navlink" to="/rank-items">Rank items</NavLink>
-            <NavLink tag={Link} className="navlink" to="/fetch-recipes">Recipies</NavLink>
-            <NavLink tag={Link} className="navlink" to="/recipe">Recipie</NavLink>
+            <NavLink tag={Link} className="navlink" to="/rank-items">Rank Items</NavLink>
+            <NavLink tag={Link} className="navlink" to="/login">Login</NavLink>
           </div>
         </Navbar>
       </header>

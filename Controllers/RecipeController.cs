@@ -17,10 +17,17 @@ namespace RankingApp.Controllers
             new RecipeModel{Id =6, Title = "Hot Dogs", ImageId=6, Time=100, Calories=1000 }
         };
 
-        [HttpGet("{time:int}")]
-        public RecipeModel[] Get(int time)
+        [HttpGet("{id:int}")]
+        public RecipeModel[] Get(int id)
         {
-            RecipeModel[] items = Items.Where(i => i.Time <= time).ToArray();
+            RecipeModel[] items = Items.Where(i => i.Id == id).ToArray();
+            return items;
+        }
+
+        [HttpGet]
+        public RecipeModel[] Get()
+        {
+            RecipeModel[] items = Items.ToArray();
             return items;
         }
     }

@@ -4,20 +4,20 @@
 * {
   margin: 0;
   font-family: "Quicksand";
-  color: #06021f;
+  color: #cbc5ff;
+  background-color: #030413;
+}::-webkit-scrollbar {
+  display: none;
 }
 
 .navbar {
     padding: 20px;
-    display: flex;
-    align-items: center;
-    max-width: 6000px;
-    margin: 0 auto;
+    margin-bottom: 20px;
     border-bottom: 1px solid #7768fc94;
 }
 
 .navbar .navbarbrand {
-  color: #4835f1;
+  color: #cbc5ff;
   align-self: center;
   font-size:xx-large;
 }
@@ -27,7 +27,7 @@
 }
 
 .navbar .navlink{
-    color: #4835f1;
+    color: #cbc5ff;
     white-space: normal;
     margin-left: 16px;
     text-decoration: none;
@@ -37,4 +37,25 @@
 
 .navbar .navlink:hover{
   color: #7768fc94;
+}
+
+.recipe-preview {
+  padding: 10px 16px;
+  margin: 20px 0;
+  height: 150px;
+  border: 1px solid #7768fc94;
+  font-style: normal;
+}
+
+.recipe-preview:hover {
+  box-shadow: 1px 1px 3px black;
+}
+
+.recipe-preview h3{
+  color: #cbc5ff;
+  margin-bottom: 8px;
+}
+
+.recipe-preview a{
+  text-decoration: none;
 }
