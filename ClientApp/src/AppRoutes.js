@@ -2,6 +2,7 @@ import { Counter } from "./components/Counter";
 import { FetchData } from "./components/FetchData";
 import { Home } from "./components/Home";
 import RankItems from "./components/RankItems";
+import Recipe from "./components/Recipe";
 import Recipies from "./components/Recipies";
 
 const AppRoutes = [
@@ -26,8 +27,8 @@ const AppRoutes = [
       element: <Recipies />
   },
   {
-    path: '/recipe/:id',
-    element: <Recipies />
+    path: '/recipe',
+    element: <Recipe/>
 }
 
 
