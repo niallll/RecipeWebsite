@@ -19,8 +19,18 @@ const Recipies = () => {
 
     return (
         <main>
+            <h3>Recipes</h3>
             {
-                (items != null) ? items.map((items) => <Link to="/">{items.title}</Link>): <div>Loading...</div>
+                (items != null) ? 
+                items.map((items) => (
+                <div>
+                  <Link to="/">{items.title}</Link>
+                  <p>Calories: {items.calories}</p>
+                  <p>Time: {items.time}</p>
+                </div>
+                ))
+                : 
+                <div>Loading...</div>
             }
         </main>
     ) 
