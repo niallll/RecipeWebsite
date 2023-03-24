@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
+import MyImage from './MyImage';
 
 const RankItems = () => {
 
@@ -21,6 +22,7 @@ const RankItems = () => {
             {
                 (items != null) ? items.map((items) => <h3>{items.title}</h3>) : <div>Loading...</div>
             }
+            <MyImage id={0} />
         </main>
     )
 }

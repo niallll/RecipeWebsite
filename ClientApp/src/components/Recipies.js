@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import MyImage from './MyImage';
+import MovieImageArr from './MovieImages';
 
 const Recipies = () => {
 
@@ -24,13 +26,17 @@ const Recipies = () => {
             {
                 (items != null) ?
                     items.map((items) => (
-                        <div style={{width: '40%'}}>
+                        <div style={{width:"30%"}}>
                             <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none'}}>
-                                <div className='recipe-preview'>
+                                <div className='recipe-preview' style={{backgroundImage:`url(${MovieImageArr.find(o=>o.id === items.imageId)?.image})`}}>
                                     <h3>{items.title}</h3>
                                     <p>Calories: {items.calories}</p>
                                     <p>Time: {items.time}</p>
-
+                                    {console.log(items)}
+                                    {console.log(items.imageId)}
+                                    {console.log(MovieImageArr.find(o=>o.id === items.imageId))}
+                                    {/* <img id={items.ImageId} src={MovieImageArr.find(o=>o.id === items.imageId)?.image}></img> */}
+                                    {/* <MyImage id={items.id} /> */}
                                 </div>
                             </Link>
                         </div>
