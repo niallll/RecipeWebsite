@@ -23,28 +23,39 @@ const Recipies = () => {
     return (
         <main>
             <h2>Recipes</h2>
-            {
-                (items != null) ?
-                    items.map((items) => (
-                        <div style={{width:"30%"}}>
-                            <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none'}}>
-                                <div className='recipe-preview' style={{backgroundImage:`url(${MovieImageArr.find(o=>o.id === items.imageId)?.image})`}}>
-                                    <h3>{items.title}</h3>
-                                    <p>Calories: {items.calories}</p>
-                                    <p>Time: {items.time}</p>
-                                    {console.log(items)}
-                                    {console.log(items.imageId)}
-                                    {console.log(MovieImageArr.find(o=>o.id === items.imageId))}
-                                    {/* <img id={items.ImageId} src={MovieImageArr.find(o=>o.id === items.imageId)?.image}></img> */}
-                                    {/* <MyImage id={items.id} /> */}
-                                </div>
-                            </Link>
-                        </div>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+                {
+                    (items != null) ?
+                        items.map((items) => (
+                            <div className='recipe-preview-wrapper'>
+                                <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
+                                    <div className='recipe-preview' style={{ backgroundImage: `url(${MovieImageArr.find(o => o.id === items.imageId)?.image})` }}>
+                                        <div className='recipe-preview-info-wrapper'>
+                                            <h3>{items.title}</h3>
+                                        </div>
+                                        <div className='recipe-preview-info-boxes'>
+                                            <div className='recipe-preview-price-wrapper'>
+                                                <div className='recipe-preview-price'>
+                                                    {items.calories}Kcal
+                                                </div>
+                                            </div>
 
-                    ))
-                    :
-                    <div>Loading...</div>
-            }
+                                            <div className='recipe-preview-time-wrapper'>
+                                                <div className='recipe-preview-time'>
+                                                    {items.time} mins
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </Link>
+                            </div>
+
+                        ))
+                        :
+                        <div>Loading...</div>
+                }
+            </div>
         </main>
     )
 }
