@@ -1,8 +1,6 @@
-﻿using RankingApp.DataSets;
-
-namespace RankingApp.Models
+﻿namespace RankingApp.DataSets
 {
-    public class RecipeModel
+    public class RecipeDataSet
     {
         public int Id { get; set; }
         public string? Title { get; set; }
@@ -10,7 +8,5 @@ namespace RankingApp.Models
         public int Time { get; set; }
         public int Calories { get; set; }
         public string? Description { get; set; }
-        public string[]? Ingredients { get; set; }
-        public string[]? Instructions { get; set; }
     }
 }

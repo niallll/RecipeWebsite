@@ -27,24 +27,31 @@ const Recipe = () => {
             <div>            
                 <h2>{recipe.title}</h2>
 
-                <div>   
+                <div style={{display:"flex", marginBottom:"40px"}}>   
 
-                </div>
-                <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img'/>
-                <div className='recipe-info-boxes'>
-                    <div className='recipe-preview-price-wrapper'>
-                        <div className='recipe-preview-price'>
-                            {recipe.calories}Kcal
+                    <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img'/>
+                    <div style={{position:"relative"}}>
+                        <div>{recipe.description}</div>
+
+                        <div className='recipe-info-boxes'>
+                            <div className='recipe-preview-price-wrapper'>
+                                <div className='recipe-preview-price'>
+                                    {recipe.calories}Kcal
+                                </div>
+                            </div>
+
+                            <div className='recipe-preview-time-wrapper'>
+                                <div className='recipe-preview-time'>
+                                    {recipe.time} mins
+                                </div>
+                            </div>
                         </div>
+                        
                     </div>
 
-                    <div className='recipe-preview-time-wrapper'>
-                        <div className='recipe-preview-time'>
-                            {recipe.time} mins
-                        </div>
-                    </div>
+
                 </div>
-                <p>{recipe.description}</p>
+
                 <div className='recipe-ingredient-instructions'>
                     <div>
                         <h2>Ingredients</h2>

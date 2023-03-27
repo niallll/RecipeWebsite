@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RankingApp.DataSets;
 using RankingApp.Models;
+using System.Diagnostics;
+using System.Xml;
 
 namespace RankingApp.Controllers
 {
+
     [ApiController]
     [Route("[controller]")]
     public class RecipeController : ControllerBase
@@ -39,8 +43,26 @@ namespace RankingApp.Controllers
         [HttpGet]
         public RecipeModel[] Get()
         {
-            RecipeModel[] items = Items.ToArray();
-            return items;
+            using (var db = new MyDbContext())
+            {
+                // Retrieve all MyEntities with LINQ
+                List<RecipeModel> result = new List<RecipeModel> { };
+                RecipeDataSet[] recipes = db.Recipes.ToArray();
+                foreach (RecipeDataSet recipe in db.Recipes)
+                {
+                    RecipeModel a = new RecipeModel { 
+                        Id=recipe.Id, 
+                        Title=recipe.Title, 
+                        Calories=recipe.Calories, 
+                        Description=recipe.Description, 
+                        ImageId=recipe.ImageId, 
+                        Time=recipe.Time};
+                    result.Add(a);
+                }
+                return result.ToArray();
+            }
+            //RecipeModel[] items = Items.ToArray();
+            //return recipes;
         }
     }
 }
