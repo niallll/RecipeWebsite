@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import MovieImageArr from './MovieImages';
+import { ListGroup } from 'react-bootstrap';
 
 const Recipe = () => {
     const {id} = useParams();
@@ -14,8 +15,6 @@ const Recipe = () => {
                 return results.json();
             })
             .then(data => {
-                console.log(data);
-                console.log(data[0]);
                 setRecipe(data[0]);
             })
             .catch(e => { console.log(e); })
@@ -28,6 +27,9 @@ const Recipe = () => {
             <div>            
                 <h2>{recipe.title}</h2>
 
+                <div>   
+
+                </div>
                 <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img'/>
                 <div className='recipe-info-boxes'>
                     <div className='recipe-preview-price-wrapper'>
@@ -42,19 +44,29 @@ const Recipe = () => {
                         </div>
                     </div>
                 </div>
-                {/* <p>{recipe.description}</p> */}
-                <h2 style={{borderTop: "3px solid #7768fc94"}}>Ingredients</h2>
-{/*                 <ul>
-                    {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                    ))}
-                </ul>
-                <h2>Instructions</h2>
-                <ol>
-                    {recipe.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                    ))}
-                </ol> */}
+                <p>{recipe.description}</p>
+                <div className='recipe-ingredient-instructions'>
+                    <div>
+                        <h2>Ingredients</h2>
+                        <ul className='my-list'>
+                            {recipe.ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    <div className='list-instructions-wrapper'>
+                        <h2>Instructions</h2>
+                        <ol className='list-instructions'>
+                            {recipe.instructions.map((instruction, index) => (
+                            <li key={index}>{instruction}</li>
+                            ))}
+                        </ol>
+                    </div>
+                </div>
+
+
+
             </div>
 
 

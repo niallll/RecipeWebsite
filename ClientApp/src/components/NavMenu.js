@@ -14,7 +14,6 @@ export class NavMenu extends Component {
             <NavLink tag={Link} className="navlink" to="/fetch-recipes" >Recipies</NavLink>
             <NavLink tag={Link} className="navlink" to="/how-to" >How To</NavLink>
             <NavLink tag={Link} className="navlink" to="/about">About</NavLink>
-            <NavLink tag={Link} className="navlink" to="/rank-items">Rank Items</NavLink>
             <NavLink tag={Link} className="navlink" to="/login">Login</NavLink>
           </div>
         </Navbar>

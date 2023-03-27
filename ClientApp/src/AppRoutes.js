@@ -1,9 +1,7 @@
 import About from "./components/About";
 import Login from "./components/Login";
 import { Counter } from "./components/Counter";
-import { FetchData } from "./components/FetchData";
 import HowTo from "./components/HowTo";
-import RankItems from "./components/RankItems";
 import Recipe from "./components/Recipe";
 import Recipies from "./components/Recipies";
 
@@ -15,14 +13,6 @@ const AppRoutes = [
   {
     path: '/counter',
     element: <Counter />
-  },
-  {
-    path: '/fetch-data',
-    element: <FetchData />
-  },
-  {
-    path: '/rank-items',
-    element: <RankItems />
   },
   {
     path: '/fetch-recipes',
