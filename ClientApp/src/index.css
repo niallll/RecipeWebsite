@@ -214,3 +214,15 @@ img {
 .list-instructions li:last-child {
   border-bottom: none;
 }
+
+.edit-button {
+  background-color: #7768fc94;;
+  margin-right: 10px;
+  font-size: large;
+  width: 100px;
+}
+
+.edit-button:hover {
+  box-shadow: 0px 0px 1px 1px #cbc5ff;
+  transform: scale(1.01);
+}

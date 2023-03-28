@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import MovieImageArr from './MovieImages';
-import { ListGroup } from 'react-bootstrap';
+import { Button, ListGroup } from 'react-bootstrap';
+import EditableLabel from './EditableLabel';
 
 const Recipe = () => {
     const {id} = useParams();
 
     const [recipe, setRecipe] = useState(null);
-    const dataType = 100;
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    function EditClick() {
+      setIsEditing(!isEditing);
+    }
 
     useEffect(() => {
         fetch(`recipe/${id}`)
@@ -36,7 +42,7 @@ const Recipe = () => {
                         <div className='recipe-info-boxes'>
                             <div className='recipe-preview-price-wrapper'>
                                 <div className='recipe-preview-price'>
-                                    {recipe.calories}Kcal
+                                    {recipe.calories} Kcal
                                 </div>
                             </div>
 
@@ -72,8 +78,14 @@ const Recipe = () => {
                         </ol>
                     </div>
                 </div>
+                
+                <EditableLabel label={<div>asas</div>}></EditableLabel>
 
-
+                <div className='recipe-ingredient-instructions'>
+                    {!isEditing && <button onClick={EditClick} className="edit-button">Edit</button>}
+                    {isEditing && <button onClick={EditClick} className="edit-button">Cancel</button>}
+                    {isEditing && <button onClick={EditClick} className="edit-button">Save</button>}
+                </div>
 
             </div>
 
