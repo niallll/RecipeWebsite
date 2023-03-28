@@ -11,10 +11,11 @@ const Recipies = () => {
     useEffect(() => {
         fetch(`recipe`)
             .then((results) => {
-
+                console.log(results);
                 return results.json();
             })
             .then(data => {
+                console.log(data);
                 setItems(data);
             })
             .catch(e => { console.log(e); })

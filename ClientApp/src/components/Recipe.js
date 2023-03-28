@@ -56,7 +56,8 @@ const Recipe = () => {
                     <div>
                         <h2>Ingredients</h2>
                         <ul className='my-list'>
-                            {recipe.ingredients.map((ingredient, index) => (
+                            {recipe.ingredients != null && 
+                            recipe.ingredients.map((ingredient, index) => (
                             <li key={index}>{ingredient}</li>
                             ))}
                         </ul>
@@ -65,7 +66,7 @@ const Recipe = () => {
                     <div className='list-instructions-wrapper'>
                         <h2>Instructions</h2>
                         <ol className='list-instructions'>
-                            {recipe.instructions.map((instruction, index) => (
+                            {recipe.instructions && recipe.instructions.map((instruction, index) => (
                             <li key={index}>{instruction}</li>
                             ))}
                         </ol>

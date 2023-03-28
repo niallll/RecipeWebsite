@@ -23,21 +23,52 @@ namespace RankingApp.Controllers
             new string[] { "red", "green", "blue", "yellow" }
         };
 
-        private static readonly IEnumerable<RecipeModel> Items = new[]
-        {
-            new RecipeModel{Id =1, Title = "Spagetti", ImageId=1, Time=30, Calories=500, Description="Some delisous spagetti to eat", Instructions=Instructions[0], Ingredients=Ingredients[0] },
-            new RecipeModel{Id =2, Title = "Burger", ImageId=2, Time=70, Calories=300, Description="Some delisous spagetti to eat", Instructions=Instructions[1], Ingredients=Ingredients[1]  },
-            new RecipeModel{Id =3, Title = "Cheese sandwich", ImageId=3, Time=15, Calories=700, Description="Some delisous spagetti to eat", Instructions=Instructions[2], Ingredients=Ingredients[0]  },
-            new RecipeModel{Id =4, Title = "Pizza", ImageId=4, Time=60, Calories=500, Description="Some delisous spagetti to eat", Instructions=Instructions[0], Ingredients=Ingredients[1]  },
-            new RecipeModel{Id =5, Title = "Chicken Curry", ImageId=5, Time=80, Calories=100, Description="Some delisous spagetti to eat", Instructions=Instructions[2], Ingredients=Ingredients[2]  },
-            new RecipeModel{Id =6, Title = "Hot Dogs", ImageId=6, Time=100, Calories=1000, Description="Some delisous spagetti to eat", Instructions=Instructions[1], Ingredients=Ingredients[2]  }
-        };
-
         [HttpGet("{id:int}")]
         public RecipeModel[] Get(int id)
         {
-            RecipeModel[] items = Items.Where(i => i.Id == id).ToArray();
-            return items;
+            using (var db = new MyDbContext())
+            {
+                // Retrieve all MyEntities with LINQ
+                List<RecipeModel> result = new() { };
+                RecipeDataSet[]? recipes = db.Recipes?.Where(i => i.Id == id).ToArray();
+                recipes ??= Array.Empty<RecipeDataSet>();
+                foreach (RecipeDataSet recipe in recipes)
+                {
+                    RecipeModel a = new()
+                    { 
+                        Id=recipe.Id, 
+                        Title=recipe.Title, 
+                        Calories=recipe.Calories, 
+                        Description=recipe.Description, 
+                        ImageId=recipe.ImageId, 
+                        Time=recipe.Time
+                    };
+
+                    InstructionDataSet[]? instructions = db.Instructions?.Where(i => i.RecipeId == id).ToArray();
+                    instructions ??= Array.Empty<InstructionDataSet>();
+                    List<string> individualInstruction = new() { };
+                    foreach(InstructionDataSet instruction in instructions){
+                        individualInstruction.Add(instruction.InstructionText);
+                    }
+                    a.Instructions = individualInstruction;
+
+
+                    IngredientDataSet[]? ingredients = db.Ingredients?.Where(i => i.RecipeId == id).ToArray();
+                    ingredients ??= Array.Empty<IngredientDataSet>();
+                    List<string> individualIngredient = new() { };
+                    foreach (IngredientDataSet ingredient in ingredients)
+                    {
+                        individualIngredient.Add($"{ingredient.Amount} {ingredient.Name}");
+                    }
+                    a.Ingredients = individualIngredient;
+
+                    a.Ingredients = (a.Ingredients.Count == 0) ? Ingredients[0].ToList() : a.Ingredients;
+                    a.Instructions = (a.Instructions.Count == 0) ? Instructions[0].ToList() : a.Instructions;
+
+                    result.Add(a);
+                }
+                return result.ToArray();
+            }
         }
 
         [HttpGet]
@@ -61,8 +92,6 @@ namespace RankingApp.Controllers
                 }
                 return result.ToArray();
             }
-            //RecipeModel[] items = Items.ToArray();
-            //return recipes;
         }
     }
 }
