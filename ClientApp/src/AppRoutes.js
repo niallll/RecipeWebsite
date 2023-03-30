@@ -4,6 +4,7 @@ import { Counter } from "./components/Counter";
 import HowTo from "./components/HowTo";
 import Recipe from "./components/Recipe";
 import Recipies from "./components/Recipies";
+import RecipeEdit from "./components/RecipeEdit";
 
 const AppRoutes = [
   {
@@ -33,6 +34,10 @@ const AppRoutes = [
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/recipe-edit/:id',
+    element: <RecipeEdit />
   }
 
 

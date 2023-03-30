@@ -36,25 +36,26 @@ const Recipe = () => {
     return (
         <main>
             {recipe != null ? 
-            <div>            
-                <h2>{recipe.title}</h2>
+            <div> 
+                <input style={{height:"38.39px", marginBottom:"8px", border: "0px", padding: "0px", fontSize: "25pt", width: "100%"}} defaultValue={recipe.title}></input>           
 
                 <div style={{display:"flex", marginBottom:"40px"}}>   
-
-                    <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img'/>
+                    <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit'/>
                     <div className='recipe-description-area'>
-                        <div>{recipe.description}</div>
+                        <textarea  defaultValue={recipe.description} className="textarea"/>
 
                         <div className='recipe-info-boxes'>
                             <div className='recipe-preview-price-wrapper'>
                                 <div className='recipe-preview-price'>
-                                    {recipe.calories} Kcal
+                                    <label className='recipe-preview-price'>Kcal:</label>
+                                    <input defaultValue={recipe.calories}  className='recipe-preview-price'></input>
                                 </div>
                             </div>
 
                             <div className='recipe-preview-time-wrapper'>
                                 <div className='recipe-preview-time'>
-                                    {recipe.time} mins
+                                    <label className='recipe-preview-price'>mins:</label>
+                                    <input defaultValue={recipe.time}  className='recipe-preview-price'></input>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +71,7 @@ const Recipe = () => {
                         <ul className='my-list'>
                             {recipe.ingredients != null && 
                             recipe.ingredients.map((ingredient, index) => (
-                            <li key={index}>{ingredient}</li>
+                            <li key={index}><input defaultValue={ingredient} style={{border: "0px", padding: "0px", backgroundColor:"#0a0a2299"}}/></li>
                             ))}
                         </ul>
                     </div>
@@ -79,22 +80,16 @@ const Recipe = () => {
                         <h2>Instructions</h2>
                         <ol className='list-instructions'>
                             {recipe.instructions && recipe.instructions.map((instruction, index) => (
-                            <li key={index}>{instruction}</li>
+                            <li key={index}><input defaultValue={instruction} style={{border: "0px", padding: "0px"}}/></li>
                             ))}
                         </ol>
                     </div>
                 </div>
-                
-                {/* <EditableLabel label="asas" isEditing={isEditing}></EditableLabel> */}
 
                 <div className='recipe-ingredient-instructions'>
-                    <Link to={`/recipe-edit/${recipe.id}`} style={{ textDecoration: 'none' }}>
-                        <button className="edit-button">Edit</button>
+                    <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
+                        <button className="edit-button">Cancel</button>
                     </Link>
-
-{/*                     {!isEditing && <button onClick={EditClick} className="edit-button">Edit</button>}
-                    {isEditing && <button onClick={CancelClick} className="edit-button">Cancel</button>}
-                    {isEditing && <button onClick={EditClick} className="edit-button">Save</button>} */}
                 </div>
 
             </div>
