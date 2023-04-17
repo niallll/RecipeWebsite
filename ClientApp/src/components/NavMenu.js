@@ -12,6 +12,7 @@ export class NavMenu extends Component {
           <NavbarBrand tag={Link} to="/" className='navbarbrand'>Niall's Recipes</NavbarBrand>
           <div className='navbarlinks'>
             <NavLink tag={Link} className="navlink" to="/fetch-recipes" >Recipies</NavLink>
+            <NavLink tag={Link} className="navlink" to="/recipe-new" >New Recipie</NavLink>
             <NavLink tag={Link} className="navlink" to="/how-to" >How To</NavLink>
             <NavLink tag={Link} className="navlink" to="/about">About</NavLink>
             <NavLink tag={Link} className="navlink" to="/login">Login</NavLink>

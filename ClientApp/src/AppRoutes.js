@@ -5,6 +5,7 @@ import HowTo from "./components/HowTo";
 import Recipe from "./components/Recipe";
 import Recipies from "./components/Recipies";
 import RecipeEdit from "./components/RecipeEdit";
+import RecipeNew from "./components/RecipeNew";
 
 const AppRoutes = [
   {
@@ -38,6 +39,10 @@ const AppRoutes = [
   {
     path: '/recipe-edit/:id',
     element: <RecipeEdit />
+  },
+  {
+    path: '/recipe-new',
+    element: <RecipeNew />
   }
 
 

@@ -71,27 +71,83 @@ namespace RankingApp.Controllers
             }
         }
 
+        [HttpPost()]
+        public async Task<IActionResult> Put(RecipeModel recipeModel)
+        {
+            using var db = new MyDbContext();
+            db.Add(recipeModel);
+            await db.SaveChangesAsync();
+            return NoContent();
+        }
+
+        [HttpPost("{id:int}")]
+        public async Task<IActionResult> Put(int id, RecipeModel recipeModel)
+        {
+            using var db = new MyDbContext();
+            // Retrieve all MyEntities with LINQ
+            List<RecipeModel> result = new() { };
+            RecipeDataSet[]? recipes = db.Recipes?.Where(i => i.Id == id).ToArray();
+            recipes ??= Array.Empty<RecipeDataSet>();
+            foreach (RecipeDataSet recipe in recipes)
+            {
+                RecipeModel a = new()
+                {
+                    Id = recipe.Id,
+                    Title = recipe.Title,
+                    Calories = recipe.Calories,
+                    Description = recipe.Description,
+                    ImageId = recipe.ImageId,
+                    Time = recipe.Time
+                };
+
+                InstructionDataSet[]? instructions = db.Instructions?.Where(i => i.RecipeId == id).ToArray();
+                instructions ??= Array.Empty<InstructionDataSet>();
+                List<string> individualInstruction = new() { };
+                foreach (InstructionDataSet instruction in instructions)
+                {
+                    individualInstruction.Add(instruction.InstructionText);
+                }
+                a.Instructions = individualInstruction;
+
+
+                IngredientDataSet[]? ingredients = db.Ingredients?.Where(i => i.RecipeId == id).ToArray();
+                ingredients ??= Array.Empty<IngredientDataSet>();
+                List<string> individualIngredient = new() { };
+                foreach (IngredientDataSet ingredient in ingredients)
+                {
+                    individualIngredient.Add($"{ingredient.Amount} {ingredient.Name}");
+                }
+                a.Ingredients = individualIngredient;
+
+                a.Ingredients = (a.Ingredients.Count == 0) ? Ingredients[0].ToList() : a.Ingredients;
+                a.Instructions = (a.Instructions.Count == 0) ? Instructions[0].ToList() : a.Instructions;
+
+                result.Add(a);
+            }
+            return NoContent();
+        }
+
         [HttpGet]
         public RecipeModel[] Get()
         {
-            using (var db = new MyDbContext())
+            using var db = new MyDbContext();
+            // Retrieve all MyEntities with LINQ
+            List<RecipeModel> result = new() { };
+            RecipeDataSet[] recipes = db.Recipes.ToArray();
+            foreach (RecipeDataSet recipe in db.Recipes)
             {
-                // Retrieve all MyEntities with LINQ
-                List<RecipeModel> result = new List<RecipeModel> { };
-                RecipeDataSet[] recipes = db.Recipes.ToArray();
-                foreach (RecipeDataSet recipe in db.Recipes)
+                RecipeModel a = new()
                 {
-                    RecipeModel a = new RecipeModel { 
-                        Id=recipe.Id, 
-                        Title=recipe.Title, 
-                        Calories=recipe.Calories, 
-                        Description=recipe.Description, 
-                        ImageId=recipe.ImageId, 
-                        Time=recipe.Time};
-                    result.Add(a);
-                }
-                return result.ToArray();
+                    Id = recipe.Id,
+                    Title = recipe.Title,
+                    Calories = recipe.Calories,
+                    Description = recipe.Description,
+                    ImageId = recipe.ImageId,
+                    Time = recipe.Time
+                };
+                result.Add(a);
             }
+            return result.ToArray();
         }
     }
 }

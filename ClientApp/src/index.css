@@ -174,7 +174,7 @@ img {
   display: flex;
   flex-direction: row;
   width: inherit;
-  border-Top: 3px solid #0a072294;
+  border-Top: 3px solid #7768fc94;
   padding: 10px;
 }
 
@@ -204,6 +204,7 @@ img {
 .list-instructions {
   padding: 0;
   list-style-position: inside;
+  
 }
 
 .list-instructions li {
@@ -251,4 +252,21 @@ img {
   height: 230px;
   padding: 0px;
   border: 0px;
+  background-color: #090931;
+}
+
+.invisable-edit{
+  border: 0px;
+  padding: 0px;
+  background-color: #090931;
+}
+
+.header-edit{
+  height: 38.39px; 
+  margin-bottom: 8px;
+  border: 0px;
+  padding: 0px;
+  font-size: 25pt;
+  width: 100%;
+  background-color: #090931;
 }

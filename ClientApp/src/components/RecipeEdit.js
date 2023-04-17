@@ -3,6 +3,7 @@ import {Link, useParams} from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import { Button, ListGroup } from 'react-bootstrap';
 import EditableLabel from './EditableLabel';
+import axios from 'axios';
 
 const Recipe = () => {
     const {id} = useParams();
@@ -11,8 +12,32 @@ const Recipe = () => {
 
     const [isEditing, setIsEditing] = useState(false);
 
+    var jsonData = {
+        "users": [
+            {
+                "name": "alan", 
+                "age": 23,
+                "username": "aturing"
+            },
+            {
+                "name": "john", 
+                "age": 29,
+                "username": "__john__"
+            }
+        ]
+    }
+
     function EditClick() {
       setIsEditing(!isEditing);
+      axios.post(`recipe/${id}`, {
+        calories: 100,
+        description: 'a new description'
+      }).then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
 
     function CancelClick() {
@@ -37,13 +62,13 @@ const Recipe = () => {
         <main>
             {recipe != null ? 
             <div> 
-                <input style={{height:"38.39px", marginBottom:"8px", border: "0px", padding: "0px", fontSize: "25pt", width: "100%"}} defaultValue={recipe.title}></input>           
+                <input className='header-edit' defaultValue={recipe.title}></input>           
 
                 <div style={{display:"flex", marginBottom:"40px"}}>   
                     <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit'/>
                     <div className='recipe-description-area'>
                         <textarea  defaultValue={recipe.description} className="textarea"/>
-
+                        
                         <div className='recipe-info-boxes'>
                             <div className='recipe-preview-price-wrapper'>
                                 <div className='recipe-preview-price'>
@@ -71,7 +96,7 @@ const Recipe = () => {
                         <ul className='my-list'>
                             {recipe.ingredients != null && 
                             recipe.ingredients.map((ingredient, index) => (
-                            <li key={index}><input defaultValue={ingredient} style={{border: "0px", padding: "0px", backgroundColor:"#0a0a2299"}}/></li>
+                            <li key={index}><input defaultValue={ingredient} className='invisable-edit'/></li>
                             ))}
                         </ul>
                     </div>
@@ -80,7 +105,7 @@ const Recipe = () => {
                         <h2>Instructions</h2>
                         <ol className='list-instructions'>
                             {recipe.instructions && recipe.instructions.map((instruction, index) => (
-                            <li key={index}><input defaultValue={instruction} style={{border: "0px", padding: "0px"}}/></li>
+                            <li key={index}><input defaultValue={instruction} className='invisable-edit'/></li>
                             ))}
                         </ol>
                     </div>
@@ -90,6 +115,9 @@ const Recipe = () => {
                     <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
                         <button className="edit-button">Cancel</button>
                     </Link>
+                    {/* <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}> */}
+                        <button className="edit-button" onClick={EditClick}>Save</button>
+                    {/* </Link> */}
                 </div>
 
             </div>
