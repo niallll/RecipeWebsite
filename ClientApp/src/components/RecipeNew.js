@@ -8,7 +8,7 @@ import axios from 'axios';
 const Recipe = () => {
     const [isEditing, setIsEditing] = useState(false);
 
-    const [recipie, setRecipie] = useState({
+    const [recipie, setRecipe] = useState({
         title: '',
         calories: 0,
         time: 0,
@@ -34,19 +34,19 @@ const Recipe = () => {
 
         switch (name) {
             case 'ingredients':
-                setRecipie((prevState) => ({
+                setRecipe((prevState) => ({
                     ...prevState,
                     [name]: [value]
                 }));
                 break;
             case 'instructions':
-                setRecipie((prevState) => ({
+                setRecipe((prevState) => ({
                     ...prevState,
                     [name]: [value]
                 }));
                 break;
             default:
-                setRecipie((prevState) => ({
+                setRecipe((prevState) => ({
                     ...prevState,
                     [name]: value
                 }));
