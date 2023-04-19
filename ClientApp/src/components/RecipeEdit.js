@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
-import { Button, ListGroup } from 'react-bootstrap';
-import EditableLabel from './EditableLabel';
 import axios from 'axios';
+import RecipeEditTime from './RecipeEditTime';
 
 const Recipe = () => {
     const { id } = useParams();
@@ -17,22 +16,19 @@ const Recipe = () => {
         instructions: []
     });
 
-    const [isEditing, setIsEditing] = useState(false);
+    const [newIngredient, setNewIngredient] = useState(false);
+
+    const navigate = useNavigate();
 
     function EditClick() {
-        setIsEditing(!isEditing);
         axios.post(`recipe/${id}`, recipe)
-            .then(function (response) {
+            .then((response) => {
                 console.log(response);
+                navigate(`/recipe/${recipe.id}`);
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
             });
-    }
-
-    function CancelClick() {
-        setIsEditing(!isEditing);
-        this.forceUpdate();
     }
 
     useEffect(() => {
@@ -47,22 +43,20 @@ const Recipe = () => {
     }, []);
 
     const handleNewIngredientChange = (event) => {
-        const value = document.getElementById("new-ingredient").value;
+        const { value } = event.target;
+        setNewIngredient(value);
+    }
+
+    const handleNewIngredientSubmit = (event) => {
         setRecipe((prevState) => ({
             ...prevState,
-            ['ingredients']: prevState['ingredients'].concat([value])
+            ['ingredients']: prevState['ingredients'].concat([newIngredient])
         }));
-        document.getElementById("new-ingredient").value = '';
-        // event.target.value = '';
-        // this.forceUpdate();
-
-        // const eleID = recipe.ingredients.length;
-        // document.getElementById("ingredients" + eleID).focus();
+        setNewIngredient('');
     }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-
         switch (name) {
             case 'ingredients':
                 setRecipe((prevState) => ({
@@ -94,24 +88,13 @@ const Recipe = () => {
                         <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                         <div className='recipe-description-area'>
                             <textarea defaultValue={recipe.description} className="textarea" name='description' onChange={handleInputChange} />
-
                             <div className='recipe-info-boxes'>
-                                <div className='recipe-preview-price-wrapper'>
-                                    <div className='recipe-preview-price'>
-                                        <label className='recipe-preview-price'>Kcal:</label>
-                                        <input defaultValue={recipe.calories} className='recipe-preview-price' name='calories' onChange={handleInputChange}></input>
-                                    </div>
-                                </div>
-
-                                <div className='recipe-preview-time-wrapper'>
-                                    <div className='recipe-preview-time'>
-                                        <label className='recipe-preview-price'>mins:</label>
-                                        <input defaultValue={recipe.time} className='recipe-preview-price' name='time' onChange={handleInputChange} on></input>
-                                    </div>
-                                </div>
+                                <RecipeEditTime name='calories' text='Kcal' value={recipe.calories} handleInputChange={handleInputChange} />
+                                <RecipeEditTime name='time' text='mins' value={recipe.time} handleInputChange={handleInputChange} />
                             </div>
                         </div>
                     </div>
+                    
 
                     <div className='recipe-ingredient-instructions'>
                         <div>
@@ -121,7 +104,7 @@ const Recipe = () => {
                                     recipe.ingredients.map((ingredient, index) => (
                                         <li key={index}><input defaultValue={ingredient} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleInputChange} /></li>
                                     ))}
-                                <li><input className='invisable-edit' name='title' id='new-ingredient'/><button onClick={handleNewIngredientChange}>add ingredient</button></li>
+                                <li><input className='invisable-edit' name='title' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient}/><button onClick={handleNewIngredientSubmit}>add ingredient</button></li>
                             </ul>
                         </div>
 
@@ -139,9 +122,7 @@ const Recipe = () => {
                         <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
                             <button className="edit-button">Cancel</button>
                         </Link>
-                        {/* <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}> */}
                         <button className="edit-button" onClick={EditClick}>Save</button>
-                        {/* </Link> */}
                     </div>
 
                 </div>

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {Link, useParams} from 'react-router-dom';
 import MovieImageArr from './MovieImages';
-import { Button, ListGroup } from 'react-bootstrap';
-import EditableLabel from './EditableLabel';
 
 const Recipe = () => {
     const {id} = useParams();
