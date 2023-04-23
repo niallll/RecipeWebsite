@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
-import RecipeEditTime from './RecipeEditTime';
+import RecipeEditNumberValue from './RecipeEditTime';
 
 const Recipe = () => {
     const { id } = useParams();
@@ -16,7 +16,8 @@ const Recipe = () => {
         instructions: []
     });
 
-    const [newIngredient, setNewIngredient] = useState(false);
+    const [newIngredient, setNewIngredient] = useState('');
+    const [newInstruction, setNewInstruction] = useState('');
 
     const navigate = useNavigate();
 
@@ -40,22 +41,35 @@ const Recipe = () => {
                 setRecipe(data[0]);
             })
             .catch(e => { console.log(e); })
-    }, []);
+    }, [id]);
 
     const handleNewIngredientChange = (event) => {
         const { value } = event.target;
         setNewIngredient(value);
     }
 
-    const handleNewIngredientSubmit = (event) => {
+    const handleNewIngredientSubmit = () => {
         setRecipe((prevState) => ({
             ...prevState,
-            ['ingredients']: prevState['ingredients'].concat([newIngredient])
+            'ingredients': prevState['ingredients'].concat([newIngredient])
         }));
         setNewIngredient('');
     }
 
-    const handleInputChange = (event) => {
+    const handleNewInstructionChange = (event) => {
+        const { value } = event.target;
+        setNewInstruction(value);
+    }
+
+    const handleNewInstructionSubmit = () => {
+        setRecipe((prevState) => ({
+            ...prevState,
+            'instructions': prevState['instructions'].concat([newInstruction])
+        }));
+        setNewInstruction('');
+    }
+
+    const handleRecipeChange = (event) => {
         const { name, value } = event.target;
         switch (name) {
             case 'ingredients':
@@ -82,15 +96,15 @@ const Recipe = () => {
         <main>
             {recipe != null ?
                 <div>
-                    <input className='header-edit' defaultValue={recipe.title} name='title' onChange={handleInputChange}></input>
+                    <input className='header-edit' defaultValue={recipe.title} name='title' onChange={handleRecipeChange}></input>
 
                     <div style={{ display: "flex", marginBottom: "40px" }}>
                         <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                         <div className='recipe-description-area'>
-                            <textarea defaultValue={recipe.description} className="textarea" name='description' onChange={handleInputChange} />
+                            <textarea defaultValue={recipe.description} className="textarea" name='description' onChange={handleRecipeChange} />
                             <div className='recipe-info-boxes'>
-                                <RecipeEditTime name='calories' text='Kcal' value={recipe.calories} handleInputChange={handleInputChange} />
-                                <RecipeEditTime name='time' text='mins' value={recipe.time} handleInputChange={handleInputChange} />
+                                <RecipeEditNumberValue name='calories' text='Kcal' value={recipe.calories} handleInputChange={handleRecipeChange} />
+                                <RecipeEditNumberValue name='time' text='mins' value={recipe.time} handleInputChange={handleRecipeChange} />
                             </div>
                         </div>
                     </div>
@@ -102,9 +116,12 @@ const Recipe = () => {
                             <ul className='my-list'>
                                 {recipe.ingredients != null &&
                                     recipe.ingredients.map((ingredient, index) => (
-                                        <li key={index}><input defaultValue={ingredient} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleInputChange} /></li>
+                                        <li key={index}><input defaultValue={ingredient} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleRecipeChange} /></li>
                                     ))}
-                                <li><input className='invisable-edit' name='title' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient}/><button onClick={handleNewIngredientSubmit}>add ingredient</button></li>
+                                <li>
+                                    <input className='invisable-edit' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient}/>
+                                    <button onClick={handleNewIngredientSubmit}>add ingredient</button>
+                                </li>
                             </ul>
                         </div>
 
@@ -112,8 +129,12 @@ const Recipe = () => {
                             <h2>Instructions</h2>
                             <ol className='list-instructions'>
                                 {recipe.instructions && recipe.instructions.map((instruction, index) => (
-                                    <li key={index}><input defaultValue={instruction} className='invisable-edit' name='instructions' onChange={handleInputChange} /></li>
+                                    <li key={index}><input defaultValue={instruction} className='invisable-edit' name='instructions' onChange={handleRecipeChange} /></li>
                                 ))}
+                                <li>
+                                    <input className='invisable-edit' id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction}/>
+                                    <button onClick={handleNewInstructionSubmit}>add instruction</button>
+                                </li>
                             </ol>
                         </div>
                     </div>

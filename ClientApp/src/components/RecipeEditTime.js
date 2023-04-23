@@ -1,6 +1,6 @@
 import React from 'react';
 
-const RecipeEditTime = (prop) => {
+const RecipeEditNumberValue = (prop) => {
   return (
     <div className='recipe-preview-time-wrapper'>
       <div className='recipe-preview-time'>
@@ -11,4 +11,4 @@ const RecipeEditTime = (prop) => {
   );
 };
 
-export default RecipeEditTime;
+export default RecipeEditNumberValue;
