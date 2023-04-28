@@ -22,10 +22,11 @@ const Recipe = () => {
     useEffect(() => {
         fetch(`recipe/${id}`)
             .then((results) => {
+                alert(results.id);
                 return results.json();
             })
             .then(data => {
-                setRecipe(data[0]);
+                setRecipe(data);
             })
             .catch(e => { console.log(e); })
     }, []);
@@ -76,9 +77,9 @@ const Recipe = () => {
                     <div className='list-instructions-wrapper'>
                         <h2>Instructions</h2>
                         <ol className='list-instructions'>
-                            {recipe.instructions && recipe.instructions.map((instruction, index) => (
-                            <li key={index}>{instruction}</li>
-                            ))}
+                            {/*{recipe.instructions && recipe.instructions.map((instruction, index) => (*/}
+                            {/*<li key={index}>{instruction}</li>*/}
+                            {/*))}*/}
                         </ol>
                     </div>
                 </div>

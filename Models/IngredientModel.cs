@@ -1,10 +1,9 @@
-﻿namespace RankingApp.DataSets
+namespace RankingApp.Models
 {
-    public class IngredientDataSet
+    public class IngredientModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Amount { get; set; }
-        public int RecipeId { get; set; }
     }
 }

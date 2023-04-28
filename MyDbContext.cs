@@ -9,9 +9,9 @@ namespace RankingApp
     // Define your DbContext
     public class MyDbContext : DbContext
     {
-        public DbSet<RecipeDataSet>? Recipes { get; set; }
-        public DbSet<InstructionDataSet>? Instructions { get; set; }
-        public DbSet<IngredientDataSet>? Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Instruction> Instructions { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

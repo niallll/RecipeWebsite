@@ -10,7 +10,7 @@ namespace RankingApp.Models
         public int Time { get; set; }
         public int Calories { get; set; }
         public string? Description { get; set; }
-        public List<string>? Ingredients { get; set; }
-        public List<string>? Instructions { get; set; }
+        public ICollection<IngredientModel>? Ingredients { get; set; }
+        public ICollection<InstructionModel>? Instructions { get; set; }
     }
 }

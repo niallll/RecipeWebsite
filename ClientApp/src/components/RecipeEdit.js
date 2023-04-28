@@ -51,7 +51,7 @@ const Recipe = () => {
     const handleNewIngredientSubmit = () => {
         setRecipe((prevState) => ({
             ...prevState,
-            'ingredients': prevState['ingredients'].concat([newIngredient])
+            'ingredients':  [...prevState.ingredients, newIngredient]
         }));
         setNewIngredient('');
     }
@@ -64,7 +64,7 @@ const Recipe = () => {
     const handleNewInstructionSubmit = () => {
         setRecipe((prevState) => ({
             ...prevState,
-            'instructions': prevState['instructions'].concat([newInstruction])
+            'instructions': [...prevState.instructions, newInstruction]
         }));
         setNewInstruction('');
     }
