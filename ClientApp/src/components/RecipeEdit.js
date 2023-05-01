@@ -38,7 +38,7 @@ const Recipe = () => {
                 return results.json();
             })
             .then(data => {
-                setRecipe(data[0]);
+                setRecipe(data);
             })
             .catch(e => { console.log(e); })
     }, [id]);
@@ -92,6 +92,20 @@ const Recipe = () => {
         }
     };
 
+    const handleInstructionChange = (event, index) => {
+        const { name, value } = event.target;
+
+        const updatedInstructions = recipe.instructions;
+        const InstructionIndex = updatedInstructions.findIndex(i => i.stepNumber === index);
+        updatedInstructions[InstructionIndex].instructionText = value;
+
+        setRecipe((prevState) => ({
+            ...prevState,
+            'instructions': updatedInstructions
+        }));
+
+    };
+
     return (
         <main>
             {recipe != null ?
@@ -128,8 +142,10 @@ const Recipe = () => {
                         <div className='list-instructions-wrapper'>
                             <h2>Instructions</h2>
                             <ol className='list-instructions'>
-                                {recipe.instructions && recipe.instructions.map((instruction, index) => (
-                                    <li key={index}><input defaultValue={instruction} className='invisable-edit' name='instructions' onChange={handleRecipeChange} /></li>
+                                {recipe.instructions && recipe.instructions.sort((a, b) => a.stepNumber - b.stepNumber).map((instruction, index) => (
+                                    <li key={index}>
+                                        <input defaultValue={instruction.instructionText} className='invisable-edit' name='instructions' onChange={e => handleInstructionChange(e, instruction.stepNumber)} />
+                                    </li>
                                 ))}
                                 <li>
                                     <input className='invisable-edit' id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction}/>
