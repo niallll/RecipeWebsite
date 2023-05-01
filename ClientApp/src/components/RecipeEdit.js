@@ -51,7 +51,7 @@ const Recipe = () => {
     const handleNewIngredientSubmit = () => {
         setRecipe((prevState) => ({
             ...prevState,
-            'ingredients':  [...prevState.ingredients, newIngredient]
+            'ingredients': [...prevState.ingredients, newIngredient]
         }));
         setNewIngredient('');
     }
@@ -62,12 +62,32 @@ const Recipe = () => {
     }
 
     const handleNewInstructionSubmit = () => {
+        var max = 0;
+        if (recipe.instructions.length > 0){
+            max = recipe.instructions.reduce(function (prev, current) {
+                return (prev.stepNumber > current.stepNumber) ? prev : current
+            }).stepNumber + 1;
+        }
+
         setRecipe((prevState) => ({
             ...prevState,
-            'instructions': [...prevState.instructions, newInstruction]
+            'instructions': [...prevState.instructions, { id: null, instructionText: newInstruction, stepNumber: max }]
         }));
         setNewInstruction('');
     }
+
+    const handleInstructionChange = (event, index) => {
+        const { name, value } = event.target;
+
+        const updatedInstructions = recipe.instructions;
+        const InstructionIndex = updatedInstructions.findIndex(i => i.stepNumber === index);
+        updatedInstructions[InstructionIndex].instructionText = value;
+
+        setRecipe((prevState) => ({
+            ...prevState,
+            'instructions': updatedInstructions
+        }));
+    };
 
     const handleRecipeChange = (event) => {
         const { name, value } = event.target;
@@ -92,20 +112,6 @@ const Recipe = () => {
         }
     };
 
-    const handleInstructionChange = (event, index) => {
-        const { name, value } = event.target;
-
-        const updatedInstructions = recipe.instructions;
-        const InstructionIndex = updatedInstructions.findIndex(i => i.stepNumber === index);
-        updatedInstructions[InstructionIndex].instructionText = value;
-
-        setRecipe((prevState) => ({
-            ...prevState,
-            'instructions': updatedInstructions
-        }));
-
-    };
-
     return (
         <main>
             {recipe != null ?
@@ -122,7 +128,7 @@ const Recipe = () => {
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div className='recipe-ingredient-instructions'>
                         <div>
@@ -130,10 +136,10 @@ const Recipe = () => {
                             <ul className='my-list'>
                                 {recipe.ingredients != null &&
                                     recipe.ingredients.map((ingredient, index) => (
-                                        <li key={index}><input defaultValue={ingredient} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleRecipeChange} /></li>
+                                        <li key={index}><input defaultValue={ingredient.name} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleRecipeChange} /></li>
                                     ))}
                                 <li>
-                                    <input className='invisable-edit' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient}/>
+                                    <input className='invisable-edit' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient} />
                                     <button onClick={handleNewIngredientSubmit}>add ingredient</button>
                                 </li>
                             </ul>
@@ -148,7 +154,7 @@ const Recipe = () => {
                                     </li>
                                 ))}
                                 <li>
-                                    <input className='invisable-edit' id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction}/>
+                                    <input className='invisable-edit' id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction} />
                                     <button onClick={handleNewInstructionSubmit}>add instruction</button>
                                 </li>
                             </ol>

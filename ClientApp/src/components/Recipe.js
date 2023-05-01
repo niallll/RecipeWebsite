@@ -68,7 +68,7 @@ const Recipe = () => {
                             <ul className='my-list'>
                                 {recipe.ingredients != null &&
                                     recipe.ingredients.map((ingredient, index) => (
-                                        <li key={index}>{ingredient}</li>
+                                        <li key={index}>{ingredient.amount}{ingredient.unit} {ingredient.name}{(ingredient.amount > 1) & !ingredient.unit ? "s" : ""}</li>
                                     ))}
                             </ul>
                         </div>

@@ -35,16 +35,13 @@ namespace RankingApp.Controllers
                 recipes ??= Array.Empty<Recipe>();
                 foreach (Recipe recipe in recipes)
                 {
-                    RecipeModel a = new()
-                    {
-                        Id = recipe.Id,
-                        Title = recipe.Title,
-                        Calories = recipe.Calories,
-                        Description = recipe.Description, 
-                        ImageId = recipe.ImageId,
-                        Time = recipe.Time
-                    };
-
+                    result.Id = recipe.Id;
+                    result.Title = recipe.Title;
+                    result.Calories = recipe.Calories;
+                    result.Description = recipe.Description;
+                    result.ImageId = recipe.ImageId;
+                    result.Time = recipe.Time;
+                    
                     List<InstructionModel> instructions = new() { };
                     foreach (Instruction i in recipe.Instructions)
                     {
@@ -56,36 +53,23 @@ namespace RankingApp.Controllers
                         };
                         instructions.Add(instructionModel);
                     }
+                    result.Instructions = instructions;
 
-                    a.Instructions = instructions;
+                    List<IngredientModel> ingredients = new() { };
+                    foreach (Ingredient i in recipe.Ingredients)
+                    {
+                        IngredientModel ingredientModel = new()
+                        {
+                            Id = i.Id,
+                            Amount = i.Amount,
+                            Name = i.Name,
+                            Unit = i.Unit
+                        };
+                        ingredients.Add(ingredientModel);
+                    }
+                    result.Ingredients = ingredients;
 
-                    //InstructionDataSet[]? instructions = db.Instructions?.Where(i => i.RecipeId == id).ToArray();
-                    //instructions ??= Array.Empty<InstructionDataSet>();
-                    //List<string> individualInstruction = new() { };
-                    //foreach (InstructionDataSet instruction in instructions)
-                    //{
-                    //  individualInstruction.Add(instruction.InstructionText);
-                    //}
-                    //a.Instructions = individualInstruction;
-
-
-                    // IngredientDataSet[]? ingredients = db.Ingredients?.Where(i => i.RecipeId == id).ToArray();
-                    // ingredients ??= Array.Empty<IngredientDataSet>();
-                    // List<string> individualIngredient = new() { };
-                    // foreach (IngredientDataSet ingredient in ingredients)
-                    // {
-                    //   individualIngredient.Add($"{ingredient.Amount} {ingredient.Name}");
-                    // }
-                    // a.Ingredients = individualIngredient;
-
-                    // a.Ingredients = (a.Ingredients.Count == 0) ? Ingredients[0].ToList() : a.Ingredients;
-                    // a.Instructions = (a.Instructions.Count == 0) ? Instructions[0].ToList() : a.Instructions;
-
-                    recipe.Ingredients = null;
-                    //recipe.Instructions = null;
-
-                    return a;
-                    var f = recipe;
+                    return result;
                 }
                 return result;
             }
