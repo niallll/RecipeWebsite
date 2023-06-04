@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
-import { Button, ListGroup } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import EditableLabel from './EditableLabel';
 import axios from 'axios';
+import { Button } from 'reactstrap';
 
 const Recipe = () => {
     const [isEditing, setIsEditing] = useState(false);
@@ -99,9 +100,9 @@ const Recipe = () => {
 
                 <div className='recipe-ingredient-instructions'>
                     <Link to={`/`} style={{ textDecoration: 'none' }}>
-                        <button className="edit-button">Cancel</button>
+                        <Button color='warning'>Cancel</Button>
                     </Link>
-                    <button className="edit-button" onClick={EditClick}>Save</button>
+                    <Button color='success' onClick={EditClick}>Save</Button>
                 </div>
 
             </div>

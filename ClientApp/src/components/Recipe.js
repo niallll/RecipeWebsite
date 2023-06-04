@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
+import { Button } from 'reactstrap';
 
 const Recipe = () => {
     const { id } = useParams();
 
     const [recipe, setRecipe] = useState(null);
-
-    const [isEditing, setIsEditing] = useState(false);
-
-    function EditClick() {
-        setIsEditing(!isEditing);
-    }
-
-    function CancelClick() {
-
-        setIsEditing(!isEditing);
-        this.forceUpdate();
-    }
 
     useEffect(() => {
         fetch(`recipe/${id}`)
@@ -28,7 +17,7 @@ const Recipe = () => {
                 setRecipe(data);
             })
             .catch(e => { console.log(e); })
-    }, []);
+    }, [id]);
 
 
     return (
@@ -83,16 +72,10 @@ const Recipe = () => {
                         </div>
                     </div>
 
-                    {/* <EditableLabel label="asas" isEditing={isEditing}></EditableLabel> */}
-
                     <div className='recipe-ingredient-instructions'>
                         <Link to={`/recipe-edit/${recipe.id}`} style={{ textDecoration: 'none' }}>
-                            <button className="edit-button">Edit</button>
+                            <Button color='warning'>Edit</Button>
                         </Link>
-
-                        {/*                     {!isEditing && <button onClick={EditClick} className="edit-button">Edit</button>}
-                    {isEditing && <button onClick={CancelClick} className="edit-button">Cancel</button>}
-                    {isEditing && <button onClick={EditClick} className="edit-button">Save</button>} */}
                     </div>
 
                 </div>

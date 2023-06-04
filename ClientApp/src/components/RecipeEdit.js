@@ -3,6 +3,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
 import RecipeEditNumberValue from './RecipeEditTime';
+import { Button } from 'reactstrap';
+
 
 const Recipe = () => {
     const { id } = useParams();
@@ -136,9 +138,18 @@ const Recipe = () => {
                             <ul className='my-list'>
                                 {recipe.ingredients != null &&
                                     recipe.ingredients.map((ingredient, index) => (
-                                        <li key={index}><input defaultValue={ingredient.name} className='invisable-edit' id={'ingredients' + index} name='ingredients' onChange={handleRecipeChange} /></li>
+                                        <li key={index}>
+                                            <span contenteditable="true">{ingredient.amount}</span>
+                                            <span contenteditable="true">{ingredient.unit}</span>
+                                            <span> </span>
+                                            <span contenteditable="true">{ingredient.name}</span>
+                                        </li>
                                     ))}
                                 <li>
+                                    <span contenteditable="true">#</span>
+                                    <span contenteditable="true">A</span>
+                                    <span> </span>
+                                    <span contenteditable="true">ABC</span>
                                     <input className='invisable-edit' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient} />
                                     <button onClick={handleNewIngredientSubmit}>add ingredient</button>
                                 </li>
@@ -163,9 +174,9 @@ const Recipe = () => {
 
                     <div className='recipe-ingredient-instructions'>
                         <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
-                            <button className="edit-button">Cancel</button>
+                            <Button color='warning'>Cancel</Button>
                         </Link>
-                        <button className="edit-button" onClick={EditClick}>Save</button>
+                        <Button color='success' onClick={EditClick}>Save</Button>
                     </div>
 
                 </div>

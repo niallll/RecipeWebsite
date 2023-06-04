@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 /* base styles */
-* {
+/* * {
   margin: 0;
   font-family: "Quicksand";
   color: #cbc5ff;
   background-color: #030413;
-}
+} */
 
 img {
   width: 300px;
@@ -19,23 +19,24 @@ img {
 }
 
 .navbar {
+
   padding: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #7768fc94;
+  border-bottom: 1px solid #5e72e4;
 }
 
 .navbar .navbarbrand {
-  color: #cbc5ff;
+  color: #172b4d;
   align-self: center;
   font-size: xx-large;
 }
 
 .navbar .navbarbrand:focus {
-  color: #cbc5ff;
+  color: #172b4d;
 }
 
 .navbar .navbarbrand:hover {
-  color: #7768fc94;
+  color: #5e72e4;
 }
 
 .navbar .navbarlinks {
@@ -43,7 +44,7 @@ img {
 }
 
 .navbar .navlink {
-  color: #cbc5ff;
+  color: #172b4d;
   white-space: normal;
   margin-left: 16px;
   text-decoration: none;
@@ -52,12 +53,7 @@ img {
 }
 
 .navbar .navlink:hover {
-  color: #7768fc94;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  color: #5e72e4;
 }
 
 .recipe-preview-info-wrapper {
@@ -119,7 +115,6 @@ img {
 }
 
 .recipe-preview-price {
-  background-color: #7768fc94;;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -140,7 +135,6 @@ img {
 }
 
 .recipe-preview-time {
-  background-color: #7768fc94;;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -216,22 +210,10 @@ img {
   border-bottom: none;
 }
 
-.edit-button {
-  background-color: #7768fc94;;
-  margin-right: 10px;
-  font-size: large;
-  width: 100px;
-}
-
 .recipe-description-area{
   position: relative;
   width: max-content;
   flex: content;
-}
-
-.edit-button:hover {
-  box-shadow: 0px 0px 1px 1px #cbc5ff;
-  transform: scale(1.01);
 }
 
 .recipe-img-edit {
@@ -252,13 +234,17 @@ img {
   height: 230px;
   padding: 0px;
   border: 0px;
-  background-color: #090931;
 }
 
 .invisable-edit{
   border: 0px;
   padding: 0px;
-  background-color: #090931;
+}
+
+.invisable-edit-small{
+  border: 0px;
+  padding: 0px;
+  block-size: fit-content;
 }
 
 .header-edit{
@@ -268,5 +254,4 @@ img {
   padding: 0px;
   font-size: 25pt;
   width: 100%;
-  background-color: #090931;
 }
