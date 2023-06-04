@@ -2,14 +2,10 @@
 
 /* base styles */
 /* * {
-  margin: 0;
   font-family: "Quicksand";
-  color: #cbc5ff;
-  background-color: #030413;
 } */
 
 img {
-  width: 300px;
   height: 200px;
   object-fit: cover;
 }
@@ -19,10 +15,10 @@ img {
 }
 
 .navbar {
-
   padding: 20px;
   margin-bottom: 20px;
   border-bottom: 1px solid #5e72e4;
+  background-color: #dee2e6;
 }
 
 .navbar .navbarbrand {
@@ -56,90 +52,15 @@ img {
   color: #5e72e4;
 }
 
-.recipe-preview-info-wrapper {
-  background: linear-gradient(to bottom, rgba(10, 10, 10, 0.6) 30%, transparent);
-  padding: 10px 16px;
-  height: 250px;
-}
-
 .recipe-preview {
-  margin: 0px 0;
-  height: 250px;
-  width: 420px;
-  border-radius: 0.5rem;
-  border: 3px solid #7768fc94;
-  font-style: normal;
-  background-size: cover;
-  margin-bottom: 40px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.275);
+  /* border-radius: 0.5rem;
+  border: 3px solid #172b4d; */
+  margin-bottom: 20px;
 }
 
 .recipe-preview:hover {
-  box-shadow: 0px 0px 7px 4px #cbc5ff;
-  transform: scale(1.02);
-}
-
-.recipe-preview h3 {
-  margin-bottom: 8px;
-}
-
-.recipe-preview * {
-  background-color: transparent;
-}
-
-.recipe-preview a {
-  text-decoration: none;
-}
-
-.recipe-preview-info-boxes{
-  bottom: 1.5rem;
-  left: 1.2rem;
-  border-radius: 0.5rem;
-  position: relative;
-  z-index: 0;
-  transform: translateY(-15%);
-  word-break: break-all;
-  font-size: large;
-  display: flex;
-  gap: 0.2rem;
-}
-
-.recipe-preview-price-wrapper {
-  background-color:  #030413;
-  border-radius: 0.5rem;
-  padding: 0.3rem;
-  position: relative;
-  z-index: 0;
-  width: max-content;
-  word-break: break-all;
-  font-size: large;
-}
-
-.recipe-preview-price {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-}
-
-.recipe-preview-time-wrapper {
-  background-color:  #030413;
-  border-radius: 0.5rem;
-  padding: 0.3rem;
-  position: relative;
-  z-index: 0;
-
-  width: max-content;
-  word-break: break-all;
-  font-size: large;
-}
-
-.recipe-preview-time {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  transform: translateY(-10px);
 }
 
 .recipe-info-boxes{

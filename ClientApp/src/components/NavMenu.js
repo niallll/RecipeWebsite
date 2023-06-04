@@ -8,7 +8,7 @@ export class NavMenu extends Component {
   render() {
     return (
       <header>
-        <Navbar className="navbar" container light>
+        <Navbar className="navbar" container dark headroom>
           <NavbarBrand tag={Link} to="/" className='navbarbrand'>Niall's Recipes</NavbarBrand>
           <div className='navbarlinks'>
             <NavLink tag={Link} className="navlink" to="/fetch-recipes" >Recipies</NavLink>

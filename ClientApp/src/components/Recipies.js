@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import MyImage from './MyImage';
 import MovieImageArr from './MovieImages';
+import { Card, CardBody, CardTitle, Col, CardText, Badge, Container, Row, CardImg } from 'reactstrap';
 
 const Recipies = () => {
 
     const [items, setItems] = useState(null);
-    const dataType = 100;
 
     useEffect(() => {
         fetch(`recipe`)
@@ -24,39 +24,36 @@ const Recipies = () => {
     return (
         <main>
             <h2>Recipes</h2>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
-                {
-                    (items != null) ?
-                        items.map((items) => (
-                            <div className='recipe-preview-wrapper'>
-                                <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
-                                    <div className='recipe-preview' style={{ backgroundImage: `url(${MovieImageArr.find(o => o.id === items.imageId)?.image})` }}>
-                                        <div className='recipe-preview-info-wrapper'>
-                                            <h3>{items.title}</h3>
-                                        </div>
-                                        <div className='recipe-preview-info-boxes'>
-                                            <div className='recipe-preview-price-wrapper'>
-                                                <div className='recipe-preview-price'>
-                                                    {items.calories}Kcal
-                                                </div>
-                                            </div>
-
-                                            <div className='recipe-preview-time-wrapper'>
-                                                <div className='recipe-preview-time'>
-                                                    {items.time} mins
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </Link>
-                            </div>
-
-                        ))
-                        :
-                        <div>Loading...</div>
-                }
-            </div>
+            <Container>
+                <Row>
+                    {
+                        (items != null) ?
+                            items.map((items) => (
+                                <Col>
+                                    <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
+                                        <Card style={{ width: '19rem' }} className='recipe-preview'>
+                                            <CardImg src={`${MovieImageArr.find(o => o.id === items.imageId)?.image}`} />
+                                            <CardBody>
+                                                <CardTitle tag="h5">
+                                                    {items.title}
+                                                </CardTitle>
+                                                <CardText>
+                                                    <h4>
+                                                        <Badge color='primary'>{items.calories} Kcal</Badge>
+                                                        <span> </span>
+                                                        <Badge color='primary'>{items.time} mins</Badge>
+                                                    </h4>
+                                                </CardText>
+                                            </CardBody>
+                                        </Card>
+                                    </Link>
+                                </Col>
+                            ))
+                            :
+                            <div>Loading...</div>
+                    }
+                </Row>
+            </Container>
         </main>
     )
 }
