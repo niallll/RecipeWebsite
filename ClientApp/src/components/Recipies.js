@@ -39,9 +39,9 @@ const Recipies = () => {
                                                 </CardTitle>
                                                 <CardText>
                                                     <h4>
-                                                        <Badge color='primary'>{items.calories} Kcal</Badge>
+                                                        <Badge color='primary' className="mr-1">{items.calories} Kcal</Badge>
                                                         <span> </span>
-                                                        <Badge color='primary'>{items.time} mins</Badge>
+                                                        <Badge color='primary' className="mr-1">{items.time} mins</Badge>
                                                     </h4>
                                                 </CardText>
                                             </CardBody>

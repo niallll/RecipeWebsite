@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
 import RecipeEditNumberValue from './RecipeEditTime';
-import { Button } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
 
 
 const Recipe = () => {
@@ -51,12 +51,33 @@ const Recipe = () => {
     }
 
     const handleNewIngredientSubmit = () => {
+        var max = 0;
+        if (recipe.ingredients.length > 0){
+            max = recipe.ingredients.reduce(function (prev, current) {
+                return (prev.stepNumber > current.stepNumber) ? prev : current
+            }).stepNumber + 1;
+        }
+
         setRecipe((prevState) => ({
             ...prevState,
-            'ingredients': [...prevState.ingredients, newIngredient]
+            'ingredients': [...prevState.ingredients, { id: null, name: newIngredient, stepNumber: max }]
         }));
         setNewIngredient('');
     }
+
+    const handleIngredientChange = (event, index) => {
+        const { value } = event.target;
+
+        const updatedIngredients = recipe.ingredients;
+        const IngredientIndex = updatedIngredients.findIndex(i => i.stepNumber === index);
+        console.log(IngredientIndex);
+        updatedIngredients[IngredientIndex].name = value;
+ 
+        setRecipe((prevState) => ({
+            ...prevState,
+            'ingredients': updatedIngredients
+        }));
+    };
 
     const handleNewInstructionChange = (event) => {
         const { value } = event.target;
@@ -79,7 +100,7 @@ const Recipe = () => {
     }
 
     const handleInstructionChange = (event, index) => {
-        const { name, value } = event.target;
+        const { value } = event.target;
 
         const updatedInstructions = recipe.instructions;
         const InstructionIndex = updatedInstructions.findIndex(i => i.stepNumber === index);
@@ -97,7 +118,7 @@ const Recipe = () => {
             case 'ingredients':
                 setRecipe((prevState) => ({
                     ...prevState,
-                    [name]: prevState['ingredients']
+                    [name]: [value]
                 }));
                 break;
             case 'instructions':
@@ -139,44 +160,37 @@ const Recipe = () => {
                                 {recipe.ingredients != null &&
                                     recipe.ingredients.map((ingredient, index) => (
                                         <li key={index}>
-                                            <span contenteditable="true">{ingredient.amount}</span>
-                                            <span contenteditable="true">{ingredient.unit}</span>
-                                            <span> </span>
-                                            <span contenteditable="true">{ingredient.name}</span>
+                                            <Input defaultValue={ingredient.name}  name='ingredients' onChange={e => handleIngredientChange(e, ingredient.stepNumber)} />
                                         </li>
                                     ))}
                                 <li>
-                                    <span contenteditable="true">#</span>
-                                    <span contenteditable="true">A</span>
-                                    <span> </span>
-                                    <span contenteditable="true">ABC</span>
-                                    <input className='invisable-edit' id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient} />
-                                    <button onClick={handleNewIngredientSubmit}>add ingredient</button>
+                                    <Input id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient} />
+                                    <Button onClick={handleNewIngredientSubmit} className='m-2'>add ingredient</Button>
                                 </li>
                             </ul>
                         </div>
 
                         <div className='list-instructions-wrapper'>
                             <h2>Instructions</h2>
-                            <ol className='list-instructions'>
+                            <ul className='list-instructions'>
                                 {recipe.instructions && recipe.instructions.sort((a, b) => a.stepNumber - b.stepNumber).map((instruction, index) => (
                                     <li key={index}>
-                                        <input defaultValue={instruction.instructionText} className='invisable-edit' name='instructions' onChange={e => handleInstructionChange(e, instruction.stepNumber)} />
+                                        <Input defaultValue={instruction.instructionText}  name='instructions' onChange={e => handleInstructionChange(e, instruction.stepNumber)} />
                                     </li>
                                 ))}
                                 <li>
-                                    <input className='invisable-edit' id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction} />
-                                    <button onClick={handleNewInstructionSubmit}>add instruction</button>
+                                    <Input id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction} />
+                                    <Button onClick={handleNewInstructionSubmit} className='m-2'>add instruction</Button>
                                 </li>
-                            </ol>
+                            </ul>
                         </div>
                     </div>
 
                     <div className='recipe-ingredient-instructions'>
                         <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
-                            <Button color='warning'>Cancel</Button>
+                            <Button color='warning' className='m-2'>Cancel</Button>
                         </Link>
-                        <Button color='success' onClick={EditClick}>Save</Button>
+                        <Button color='success' className='m-2' onClick={EditClick}>Save</Button>
                     </div>
 
                 </div>

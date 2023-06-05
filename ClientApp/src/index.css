@@ -15,24 +15,21 @@ img {
 }
 
 .navbar {
-  padding: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #5e72e4;
-  background-color: #dee2e6;
 }
 
 .navbar .navbarbrand {
-  color: #172b4d;
+  color: #5e72e4;
   align-self: center;
   font-size: xx-large;
 }
 
 .navbar .navbarbrand:focus {
-  color: #172b4d;
+  color: #5e72e4;
 }
 
 .navbar .navbarbrand:hover {
-  color: #5e72e4;
+  color: #f4f5f7;
 }
 
 .navbar .navbarlinks {
@@ -40,7 +37,7 @@ img {
 }
 
 .navbar .navlink {
-  color: #172b4d;
+  color: #5e72e4;
   white-space: normal;
   margin-left: 16px;
   text-decoration: none;
@@ -49,13 +46,11 @@ img {
 }
 
 .navbar .navlink:hover {
-  color: #5e72e4;
+  color: #f4f5f7;
 }
 
 .recipe-preview {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.275);
-  /* border-radius: 0.5rem;
-  border: 3px solid #172b4d; */
   margin-bottom: 20px;
 }
 
@@ -117,9 +112,9 @@ img {
 }
 
 .list-instructions {
+  list-style: none;
   padding: 0;
   list-style-position: inside;
-  
 }
 
 .list-instructions li {
@@ -158,12 +153,12 @@ img {
 }
 
 .invisable-edit{
-  border: 0px;
+  border: 10px;
   padding: 0px;
 }
 
 .invisable-edit-small{
-  border: 0px;
+  border: 1px;
   padding: 0px;
   block-size: fit-content;
 }
@@ -171,7 +166,7 @@ img {
 .header-edit{
   height: 38.39px; 
   margin-bottom: 8px;
-  border: 0px;
+  border: 1px;
   padding: 0px;
   font-size: 25pt;
   width: 100%;

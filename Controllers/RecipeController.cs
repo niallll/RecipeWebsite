@@ -61,9 +61,8 @@ namespace RankingApp.Controllers
                         IngredientModel ingredientModel = new()
                         {
                             Id = i.Id,
-                            Amount = i.Amount,
                             Name = i.Name,
-                            Unit = i.Unit
+                            StepNumber = i.StepNumber 
                         };
                         ingredients.Add(ingredientModel);
                     }
