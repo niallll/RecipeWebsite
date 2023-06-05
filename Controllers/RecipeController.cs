@@ -97,7 +97,7 @@ namespace RankingApp.Controllers
         public async Task<IActionResult> Put(int id, RecipeModel recipeModel)
         {
             using var db = new MyDbContext();
-            Recipe? recipe = db.Recipes?.Where(i => i.Id == id)?.First();
+            Recipe? recipe = db.Recipes?.Where(i => i.Id == id).Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).Where(i => i.Id == id)?.First();
             recipe.Id = id;
             recipe.Title = recipeModel.Title;
             recipe.Calories = recipeModel.Calories;
@@ -105,7 +105,34 @@ namespace RankingApp.Controllers
             recipe.ImageId = 2;
             recipe.Time = recipeModel.Time;
 
-            await db.SaveChangesAsync();
+            List<Instruction> instructions = new List<Instruction> { };
+            foreach (InstructionModel i in recipeModel.Instructions)
+            {
+                Instruction instruction = new()
+                {
+                    InstructionText = i.InstructionText,
+                    StepNumber = i.StepNumber,
+                    Recipe = recipe,
+                };
+                if (i.Id != -1) {
+                    instruction.Id = i.Id;
+                }
+
+                instructions.Add(instruction);
+                //await db.SaveChangesAsync();
+            }
+            
+            recipe.Instructions = instructions;
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            
             return NoContent();
         }
 

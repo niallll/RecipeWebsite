@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import { ListGroup } from 'react-bootstrap';
-import EditableLabel from './EditableLabel';
 import axios from 'axios';
 import { Button } from 'reactstrap';
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
-import RecipeEditNumberValue from './RecipeEditTime';
-import { Button, Input, Form, Container, Row , Col, textarea, FormGroup, Label} from 'reactstrap';
+import EditInstructionIngredients from './EditInstructionIngredients';
+import { Button, Input, Form, Container, Row, Col, textarea, FormGroup, Label } from 'reactstrap';
 
 
 const Recipe = () => {
@@ -52,7 +52,7 @@ const Recipe = () => {
 
     const handleNewIngredientSubmit = () => {
         var max = 0;
-        if (recipe.ingredients.length > 0){
+        if (recipe.ingredients.length > 0) {
             max = recipe.ingredients.reduce(function (prev, current) {
                 return (prev.stepNumber > current.stepNumber) ? prev : current
             }).stepNumber + 1;
@@ -72,7 +72,7 @@ const Recipe = () => {
         const IngredientIndex = updatedIngredients.findIndex(i => i.stepNumber === index);
         console.log(IngredientIndex);
         updatedIngredients[IngredientIndex].name = value;
- 
+
         setRecipe((prevState) => ({
             ...prevState,
             'ingredients': updatedIngredients
@@ -86,7 +86,7 @@ const Recipe = () => {
 
     const handleNewInstructionSubmit = () => {
         var max = 0;
-        if (recipe.instructions.length > 0){
+        if (recipe.instructions.length > 0) {
             max = recipe.instructions.reduce(function (prev, current) {
                 return (prev.stepNumber > current.stepNumber) ? prev : current
             }).stepNumber + 1;
@@ -94,7 +94,7 @@ const Recipe = () => {
 
         setRecipe((prevState) => ({
             ...prevState,
-            'instructions': [...prevState.instructions, { id: null, instructionText: newInstruction, stepNumber: max }]
+            'instructions': [...prevState.instructions, { id: -1, instructionText: newInstruction, stepNumber: max }]
         }));
         setNewInstruction('');
     }
@@ -140,23 +140,23 @@ const Recipe = () => {
             {recipe != null ?
                 <div>
                     <Input className='my-2' defaultValue={recipe.title} name='title' onChange={handleRecipeChange}></Input>
-                    <Container className='my-4'>
+                    <div className='my-2'>
                         <Row>
-                            <Col>
+                            <Col className='my-2'>
                                 <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                             </Col>
-                            <Col>
-                                    <Input
-                                        id="exampleText"
-                                        name="description"
-                                        type="textarea"
-                                        defaultValue={recipe.description}
-                                        style={{height: "300px", resize: "none"}}
-                                        onChange={handleRecipeChange}
-                                    />
+                            <Col className='my-2'>
+                                <Input
+                                    id="exampleText"
+                                    name="description"
+                                    type="textarea"
+                                    defaultValue={recipe.description}
+                                    style={{ height: "300px", resize: "none" }}
+                                    onChange={handleRecipeChange}
+                                />
                             </Col>
                         </Row>
-                    </Container>
+                    </div>
 
                     <Form className='my-3'>
                         <FormGroup row>
@@ -173,46 +173,15 @@ const Recipe = () => {
                         </FormGroup>
                     </Form>
 
+                    <EditInstructionIngredients recipe={recipe} newIngredient={newIngredient} newInstruction={newInstruction}
+                        handleIngredientChange={handleIngredientChange} handleNewIngredientChange={handleNewIngredientChange} handleNewIngredientSubmit={handleNewIngredientSubmit}
+                        handleInstructionChange={handleInstructionChange} handleNewInstructionChange={handleNewInstructionChange} handleNewInstructionSubmit={handleNewInstructionSubmit} />
 
-                    <div className='recipe-ingredient-instructions'>
-                        <div>
-                            <h2>Ingredients</h2>
-                            <ul className='my-list'>
-                                {recipe.ingredients != null &&
-                                    recipe.ingredients.map((ingredient, index) => (
-                                        <li key={index}>
-                                            <Input defaultValue={ingredient.name}  name='ingredients' onChange={e => handleIngredientChange(e, ingredient.stepNumber)} />
-                                        </li>
-                                    ))}
-                                <li>
-                                    <Input id='new-ingredient' onChange={handleNewIngredientChange} value={newIngredient} />
-                                    <Button onClick={handleNewIngredientSubmit} className='m-2'>add ingredient</Button>
-                                </li>
-                            </ul>
-                        </div>
+                    <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
+                        <Button color='warning' className='m-2'>Cancel</Button>
+                    </Link>
+                    <Button color='success' className='m-2' onClick={EditClick}>Save</Button>
 
-                        <div className='list-instructions-wrapper'>
-                            <h2>Instructions</h2>
-                            <ul className='list-instructions'>
-                                {recipe.instructions && recipe.instructions.sort((a, b) => a.stepNumber - b.stepNumber).map((instruction, index) => (
-                                    <li key={index}>
-                                        <Input defaultValue={instruction.instructionText}  name='instructions' onChange={e => handleInstructionChange(e, instruction.stepNumber)} />
-                                    </li>
-                                ))}
-                                <li>
-                                    <Input id='new-instruction' onChange={handleNewInstructionChange} value={newInstruction} />
-                                    <Button onClick={handleNewInstructionSubmit} className='m-2'>add instruction</Button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className='recipe-ingredient-instructions'>
-                        <Link to={`/recipe/${recipe.id}`} style={{ textDecoration: 'none' }}>
-                            <Button color='warning' className='m-2'>Cancel</Button>
-                        </Link>
-                        <Button color='success' className='m-2' onClick={EditClick}>Save</Button>
-                    </div>
 
                 </div>
 

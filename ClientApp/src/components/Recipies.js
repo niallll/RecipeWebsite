@@ -24,7 +24,6 @@ const Recipies = () => {
     return (
         <main>
             <h2>Recipes</h2>
-            <Container>
                 <Row>
                     {
                         (items != null) ?
@@ -50,10 +49,9 @@ const Recipies = () => {
                                 </Col>
                             ))
                             :
-                            <div>Loading...</div>
+                            <Col>Loading...</Col>
                     }
                 </Row>
-            </Container>
         </main>
     )
 }

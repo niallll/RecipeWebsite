@@ -76,7 +76,7 @@ img {
   height: 300px;
   object-fit: cover;
   border-radius: 0.5rem;
-  border: 3px solid #7768fc94;
+  border: 3px solid #5e72e4;
   margin-right: 30px;
 }
 
@@ -84,7 +84,8 @@ img {
   display: flex;
   flex-direction: row;
   width: inherit;
-  border-Top: 3px solid #7768fc94;
+  border-Top: 3px solid #5e72e4;
+  border-bottom: 3px solid #5e72e4;
   padding: 10px;
 }
 
@@ -93,12 +94,12 @@ img {
   padding: 0;
   width: 400px;
   margin-right: 45px;
-  border: 2px solid #7768fc94;
+  border: 2px solid #5e72e4;
 }
 
 .my-list li {
   padding: 10px;
-  border-bottom: 1px solid #7768fc94;
+  border-bottom: 1px solid #5e72e4;
 }
 
 .my-list li:last-child {
@@ -138,7 +139,7 @@ img {
   object-fit: cover;
   border-radius: 0.5rem;
   border: 3px solid #7768fc94;
-  margin-right: 30px;
+
 }
 
 .recipe-img-edit:hover {
