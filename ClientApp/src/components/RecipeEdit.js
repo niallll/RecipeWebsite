@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
 import RecipeEditNumberValue from './RecipeEditTime';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, Form, Container, Row , Col, textarea, FormGroup, Label} from 'reactstrap';
 
 
 const Recipe = () => {
@@ -139,18 +139,39 @@ const Recipe = () => {
         <main>
             {recipe != null ?
                 <div>
-                    <input className='header-edit' defaultValue={recipe.title} name='title' onChange={handleRecipeChange}></input>
+                    <Input className='my-2' defaultValue={recipe.title} name='title' onChange={handleRecipeChange}></Input>
+                    <Container className='my-4'>
+                        <Row>
+                            <Col>
+                                <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
+                            </Col>
+                            <Col>
+                                    <Input
+                                        id="exampleText"
+                                        name="description"
+                                        type="textarea"
+                                        defaultValue={recipe.description}
+                                        style={{height: "300px", resize: "none"}}
+                                        onChange={handleRecipeChange}
+                                    />
+                            </Col>
+                        </Row>
+                    </Container>
 
-                    <div style={{ display: "flex", marginBottom: "40px" }}>
-                        <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
-                        <div className='recipe-description-area'>
-                            <textarea defaultValue={recipe.description} className="textarea" name='description' onChange={handleRecipeChange} />
-                            <div className='recipe-info-boxes'>
-                                <RecipeEditNumberValue name='calories' text='Kcal' value={recipe.calories} handleInputChange={handleRecipeChange} />
-                                <RecipeEditNumberValue name='time' text='mins' value={recipe.time} handleInputChange={handleRecipeChange} />
-                            </div>
-                        </div>
-                    </div>
+                    <Form className='my-3'>
+                        <FormGroup row>
+                            <Label sm={1}>Kcal: </Label>
+                            <Col sm={2}>
+                                <Input defaultValue={recipe.calories} onChange={handleRecipeChange} name="calories"></Input>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label sm={1}>Mins: </Label>
+                            <Col sm={2}>
+                                <Input defaultValue={recipe.time} onChange={handleRecipeChange} name="time"></Input>
+                            </Col>
+                        </FormGroup>
+                    </Form>
 
 
                     <div className='recipe-ingredient-instructions'>
