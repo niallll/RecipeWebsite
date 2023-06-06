@@ -50,8 +50,13 @@ img {
 }
 
 .recipe-preview {
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.275);
+  border-radius: 12px;
+  box-shadow: 0 16px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-bottom: 20px;
+}
+
+.recipe-preview img {
+  border-radius: 12px 12px 0px 0;
 }
 
 .recipe-preview:hover {

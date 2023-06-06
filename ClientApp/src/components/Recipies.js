@@ -30,7 +30,7 @@ const Recipies = () => {
                             items.map((items) => (
                                 <Col>
                                     <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
-                                        <Card style={{ width: '19rem' }} className='recipe-preview'>
+                                        <Card style={{ width: '18rem' }} className='recipe-preview mx-2'>
                                             <CardImg src={`${MovieImageArr.find(o => o.id === items.imageId)?.image}`} />
                                             <CardBody>
                                                 <CardTitle tag="h5">
