@@ -119,10 +119,27 @@ namespace RankingApp.Controllers
                 }
 
                 instructions.Add(instruction);
-                //await db.SaveChangesAsync();
             }
-            
             recipe.Instructions = instructions;
+
+            List<Ingredient> ingredients = new List<Ingredient> { };
+            foreach (IngredientModel i in recipeModel.Ingredients)
+            {
+                Ingredient ingredient = new()
+                {
+                    Name = i.Name,
+                    StepNumber = i.StepNumber,
+                    Recipe = recipe,
+                };
+                if (i.Id != -1)
+                {
+                    ingredient.Id = i.Id;
+                }
+
+                ingredients.Add(ingredient);
+            }
+            recipe.Ingredients = ingredients;
+
             try
             {
                 await db.SaveChangesAsync();

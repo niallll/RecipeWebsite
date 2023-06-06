@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
-import { Button } from 'reactstrap';
+import { Button, Col, Row, Badge, Container } from 'reactstrap';
 
 const Recipe = () => {
     const { id } = useParams();
@@ -25,31 +25,28 @@ const Recipe = () => {
             {recipe != null ?
                 <div>
                     <h2>{recipe.title}</h2>
+                    <Row>
+                        <Col className='my-2'>
+                            <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img' />
+                        </Col>
+                        <Col className='my-2' md="">
+                            <Row className='h-90'>{recipe.description}</Row>
 
-                    <div style={{ display: "flex", marginBottom: "40px" }}>
-
-                        <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img' />
-                        <div className='recipe-description-area'>
-                            <div>{recipe.description}</div>
-
-                            <div className='recipe-info-boxes'>
-                                <div className='recipe-preview-price-wrapper'>
-                                    <div className='recipe-preview-price'>
+                            <Row>
+                                <Col className='mx-1' sm="1">
+                                    <Badge color='primary'>
                                         {recipe.calories} Kcal
-                                    </div>
-                                </div>
-
-                                <div className='recipe-preview-time-wrapper'>
-                                    <div className='recipe-preview-time'>
+                                    </Badge>
+                                    </Col>
+                                    <Col className='mx-1' sm="1">
+                                    <Badge color='primary mx-3'>
                                         {recipe.time} mins
-                                    </div>
-                                </div>
-                            </div>
+                                    </Badge>
+                                </Col>
+                            </Row>
 
-                        </div>
-
-
-                    </div>
+                        </Col>
+                    </Row>
 
                     <div className='recipe-ingredient-instructions'>
                         <div>

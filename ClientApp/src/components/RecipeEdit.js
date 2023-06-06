@@ -60,7 +60,7 @@ const Recipe = () => {
 
         setRecipe((prevState) => ({
             ...prevState,
-            'ingredients': [...prevState.ingredients, { id: null, name: newIngredient, stepNumber: max }]
+            'ingredients': [...prevState.ingredients, { id: -1, name: newIngredient, stepNumber: max }]
         }));
         setNewIngredient('');
     }
@@ -145,7 +145,7 @@ const Recipe = () => {
                             <Col className='my-2'>
                                 <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                             </Col>
-                            <Col className='my-2'>
+                            <Col className='my-2' md="">
                                 <Input
                                     id="exampleText"
                                     name="description"
