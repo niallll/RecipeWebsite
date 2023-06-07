@@ -4,10 +4,10 @@ using System.Xml;
 using RankingApp.Models;
 using RankingApp.DataSets;
 
-namespace RankingApp
+namespace RankingApp.DbContexts
 {
     // Define your DbContext
-    public class MyDbContext : DbContext
+    public class RecipeDbContext : DbContext
     {
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Instruction> Instructions { get; set; }

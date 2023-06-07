@@ -1,6 +1,6 @@
 namespace RankingApp.Models
 {
-    public class ImageModel
+    public class ImageDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

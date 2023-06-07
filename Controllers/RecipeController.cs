@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using RankingApp.DataSets;
+using RankingApp.DbContexts;
 using RankingApp.Models;
+using RankingApp.Services;
 using System.Diagnostics;
 using System.Xml;
 
@@ -12,25 +15,20 @@ namespace RankingApp.Controllers
     [Route("[controller]")]
     public class RecipeController : ControllerBase
     {
-        private static readonly string[][] Instructions = new string[][] {
-            new string[] { "put in bowl", "cook"},
-            new string[] { "cut", "cut more", "fry", "oven cook" },
-            new string[] { "slice", "green up", "fry", "yellow it out" }
-        };
+        private readonly IRecipeRepository _recipeRepository;
 
-        private static readonly string[][] Ingredients = new string[][] {
-            new string[] { "apple", "banana", "cherry" },
-            new string[] { "dog", "cat", "fish" },
-            new string[] { "red", "green", "blue", "yellow" }
-        };
+        public RecipeController(IRecipeRepository recipeRepository)
+        {
+            _recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
+        }
 
         [HttpGet("{id:int}")]
-        public RecipeModel Get(int id)
+        public RecipeDto Get(int id)
         {
-            using (var db = new MyDbContext())
+            using (var db = new RecipeDbContext())
             {
                 // Retrieve all MyEntities with LINQ
-                RecipeModel result = new() { };
+                RecipeDto result = new() { };
                 Recipe[] recipes = db.Recipes.Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).Where(i => i.Id == id).ToArray();
                 recipes ??= Array.Empty<Recipe>();
                 foreach (Recipe recipe in recipes)
@@ -42,10 +40,10 @@ namespace RankingApp.Controllers
                     result.ImageId = recipe.ImageId;
                     result.Time = recipe.Time;
                     
-                    List<InstructionModel> instructions = new() { };
+                    List<InstructionDto> instructions = new() { };
                     foreach (Instruction i in recipe.Instructions)
                     {
-                        InstructionModel instructionModel = new()
+                        InstructionDto instructionModel = new()
                         {
                             Id = i.Id,
                             InstructionText = i.InstructionText,
@@ -55,10 +53,10 @@ namespace RankingApp.Controllers
                     }
                     result.Instructions = instructions;
 
-                    List<IngredientModel> ingredients = new() { };
+                    List<IngredientDto> ingredients = new() { };
                     foreach (Ingredient i in recipe.Ingredients)
                     {
-                        IngredientModel ingredientModel = new()
+                        IngredientDto ingredientModel = new()
                         {
                             Id = i.Id,
                             Name = i.Name,
@@ -75,9 +73,9 @@ namespace RankingApp.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Put(RecipeModel recipeModel)
+        public async Task<IActionResult> Put(RecipeDto recipeModel)
         {
-            using var db = new MyDbContext();
+            using var db = new RecipeDbContext();
 
             Recipe a = new()
             {
@@ -94,9 +92,9 @@ namespace RankingApp.Controllers
         }
 
         [HttpPost("{id:int}")]
-        public async Task<IActionResult> Put(int id, RecipeModel recipeModel)
+        public async Task<IActionResult> Put(int id, RecipeDto recipeModel)
         {
-            using var db = new MyDbContext();
+            using var db = new RecipeDbContext();
             Recipe? recipe = db.Recipes?.Where(i => i.Id == id).Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).Where(i => i.Id == id)?.First();
             recipe.Id = id;
             recipe.Title = recipeModel.Title;
@@ -106,7 +104,7 @@ namespace RankingApp.Controllers
             recipe.Time = recipeModel.Time;
 
             List<Instruction> instructions = new List<Instruction> { };
-            foreach (InstructionModel i in recipeModel.Instructions)
+            foreach (InstructionDto i in recipeModel.Instructions)
             {
                 Instruction instruction = new()
                 {
@@ -123,7 +121,7 @@ namespace RankingApp.Controllers
             recipe.Instructions = instructions;
 
             List<Ingredient> ingredients = new List<Ingredient> { };
-            foreach (IngredientModel i in recipeModel.Ingredients)
+            foreach (IngredientDto i in recipeModel.Ingredients)
             {
                 Ingredient ingredient = new()
                 {
@@ -153,63 +151,25 @@ namespace RankingApp.Controllers
             return NoContent();
         }
 
-        [HttpPost("photo/{id:int}")]
-        public async Task<IActionResult> Put(int id, IFormFile file)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RecipeDto>>> Get()
         {
-            try
+            var recipeEntities = await _recipeRepository.GetAllRecipesAsync();
+            var results = new List<RecipeDto>();
+            foreach (var recipeEntity in recipeEntities)
             {
-                if (file == null || file.Length == 0)
+                results.Add(new RecipeDto
                 {
-                    return BadRequest("No photo uploaded");
-                }
-
-                var fileExtension = Path.GetExtension(file.FileName);
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" }; // Define the allowed file extensions
-
-                if (!Array.Exists(allowedExtensions, ext => ext.Equals(fileExtension, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return BadRequest("Invalid file format. Only JPG, JPEG, and PNG files are allowed.");
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                var filePath = Path.Combine("path_to_save_photos", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
-                return Ok("Photo uploaded successfully");
+                    Id = recipeEntity.Id,
+                    Title = recipeEntity.Title,
+                    Calories = recipeEntity.Calories,
+                    Description = recipeEntity.Description,
+                    ImageId = recipeEntity.ImageId,
+                    Time = recipeEntity.Time
+                });
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
-            }
-            return NoContent();
-        }
 
-            [HttpGet]
-        public RecipeModel[] Get()
-        {
-            using var db = new MyDbContext();
-            // Retrieve all MyEntities with LINQ
-            List<RecipeModel> result = new() { };
-            //Instruction[] instructions = db.Instructions.ToArray();
-            Recipe[] recipes = db.Recipes.Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).ToArray();
-            foreach (Recipe recipe in db.Recipes)
-            {
-                RecipeModel a = new()
-                {
-                    Id = recipe.Id,
-                    Title = recipe.Title,
-                    Calories = recipe.Calories,
-                    Description = recipe.Description,
-                    ImageId = recipe.ImageId,
-                    Time = recipe.Time
-                };
-                result.Add(a);
-            }
-            return result.ToArray();
+            return Ok(results);
         }
     }
 }

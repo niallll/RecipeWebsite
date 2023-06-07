@@ -1,6 +1,6 @@
 namespace RankingApp.Models
 {
-    public class InstructionModel
+    public class InstructionDto
     {
         public int Id { get; set; }
         public int StepNumber { get; set; }
