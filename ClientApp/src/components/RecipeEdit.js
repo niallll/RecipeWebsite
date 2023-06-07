@@ -20,10 +20,23 @@ const Recipe = () => {
 
     const [newIngredient, setNewIngredient] = useState('');
     const [newInstruction, setNewInstruction] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
 
     const navigate = useNavigate();
 
     function EditClick() {
+        const formData = new FormData();
+        formData.append('photo', selectedFile);
+
+        axios.post(`recipe/photo/${id}`, formData)
+            .then((response) => {
+                console.log(response);
+                navigate(`/recipe/${recipe.id}`);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        
         axios.post(`recipe/${id}`, recipe)
             .then((response) => {
                 console.log(response);
@@ -42,8 +55,12 @@ const Recipe = () => {
             .then(data => {
                 setRecipe(data);
             })
-            .catch(e => { console.log(e); })
+            .catch(e => { console.log(e); }) 
     }, [id]);
+
+    const handleFileChange = (event) => {
+        event.target.files[0] == undefined ? setSelectedFile(null) : setSelectedFile(event.target.files[0])
+      };
 
     const handleNewIngredientChange = (event) => {
         const { value } = event.target;
@@ -114,25 +131,12 @@ const Recipe = () => {
 
     const handleRecipeChange = (event) => {
         const { name, value } = event.target;
-        switch (name) {
-            case 'ingredients':
-                setRecipe((prevState) => ({
-                    ...prevState,
-                    [name]: [value]
-                }));
-                break;
-            case 'instructions':
-                setRecipe((prevState) => ({
-                    ...prevState,
-                    [name]: [value]
-                }));
-                break;
-            default:
-                setRecipe((prevState) => ({
-                    ...prevState,
-                    [name]: value
-                }));
-        }
+
+        setRecipe((prevState) => ({
+            ...prevState,
+            [name]: value
+        }));
+        
     };
 
     return (
@@ -145,7 +149,7 @@ const Recipe = () => {
                             <Col className='my-2'>
                                 <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                             </Col>
-                            <Col className='my-2' md="">
+                            <Col className='my-2' lg="">
                                 <Input
                                     id="exampleText"
                                     name="description"
@@ -154,6 +158,11 @@ const Recipe = () => {
                                     style={{ height: "300px", resize: "none" }}
                                     onChange={handleRecipeChange}
                                 />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <Input type='file' onChange={handleFileChange}></Input>
                             </Col>
                         </Row>
                     </div>
@@ -186,7 +195,7 @@ const Recipe = () => {
                 </div>
 
 
-                : <div>Loading...</div>}
+                : <div>Loading...</div>} 
         </main>
     )
 }

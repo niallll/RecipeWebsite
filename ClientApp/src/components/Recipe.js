@@ -27,9 +27,9 @@ const Recipe = () => {
                     <h2>{recipe.title}</h2>
                     <Row>
                         <Col className='my-2'>
-                            <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img' />
+                            <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
                         </Col>
-                        <Col className='my-2' md="">
+                        <Col className='my-2' lg="">
                             <Row className='h-90'>{recipe.description}</Row>
 
                             <Row>
@@ -48,8 +48,8 @@ const Recipe = () => {
                         </Col>
                     </Row>
 
-                    <div className='recipe-ingredient-instructions'>
-                        <div>
+                    <Row className='recipe-ingredient-instructions'>
+                        <Col lg="4">
                             <h2>Ingredients</h2>
                             <ul className='my-list'>
                                 {recipe.ingredients != null &&
@@ -57,19 +57,19 @@ const Recipe = () => {
                                         <li key={index}>{ingredient.amount}{ingredient.unit} {ingredient.name}{(ingredient.amount > 1) & !ingredient.unit ? "s" : ""}</li>
                                     ))}
                             </ul>
-                        </div>
+                        </Col>
 
-                        <div className='list-instructions-wrapper'>
+                        <Col className='list-instructions-wrapper'  lg="8">
                             <h2>Instructions</h2>
                             <ol className='list-instructions'>
                                 {recipe.instructions && recipe.instructions.sort((a, b) => a.stepNumber - b.stepNumber).map((instruction, index) => (
                                     <li key={index}>{instruction.instructionText}</li>
                                 ))}
                             </ol>
-                        </div>
-                    </div>
+                        </Col>
+                    </Row>
 
-                    <div className='recipe-ingredient-instructions'>
+                    <div className='m-2'>
                         <Link to={`/recipe-edit/${recipe.id}`} style={{ textDecoration: 'none' }}>
                             <Button color='warning'>Edit</Button>
                         </Link>

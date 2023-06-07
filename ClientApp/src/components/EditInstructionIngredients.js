@@ -8,8 +8,8 @@ function EditInstructionIngredients(props) {
     handleNewIngredientSubmit, handleNewInstructionSubmit} = props;
 
   return (
-    <div className='recipe-ingredient-instructions'>
-      <div>
+    <Row className='recipe-ingredient-instructions'>
+      <Col lg="4">
         <h2>Ingredients</h2>
         <ul className='my-list'>
           {recipe.ingredients != null &&
@@ -23,9 +23,9 @@ function EditInstructionIngredients(props) {
             <Button onClick={handleNewIngredientSubmit} className='m-2'>add ingredient</Button>
           </li>
         </ul>
-      </div>
+      </Col>
 
-      <div className='list-instructions-wrapper'>
+      <Col lg="8">
         <h2>Instructions</h2>
         <ul className='list-instructions'>
           {recipe.instructions && recipe.instructions.sort((a, b) => a.stepNumber - b.stepNumber).map((instruction, index) => (
@@ -38,8 +38,8 @@ function EditInstructionIngredients(props) {
             <Button onClick={handleNewInstructionSubmit} className='m-2'>add instruction</Button>
           </li>
         </ul>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 }
 export default EditInstructionIngredients;

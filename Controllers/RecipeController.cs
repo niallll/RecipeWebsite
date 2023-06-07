@@ -102,7 +102,7 @@ namespace RankingApp.Controllers
             recipe.Title = recipeModel.Title;
             recipe.Calories = recipeModel.Calories;
             recipe.Description = recipeModel.Description;
-            recipe.ImageId = 2;
+            //recipe.ImageId = 2;
             recipe.Time = recipeModel.Time;
 
             List<Instruction> instructions = new List<Instruction> { };
@@ -153,7 +153,42 @@ namespace RankingApp.Controllers
             return NoContent();
         }
 
-        [HttpGet]
+        [HttpPost("photo/{id:int}")]
+        public async Task<IActionResult> Put(int id, IFormFile file)
+        {
+            try
+            {
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest("No photo uploaded");
+                }
+
+                var fileExtension = Path.GetExtension(file.FileName);
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" }; // Define the allowed file extensions
+
+                if (!Array.Exists(allowedExtensions, ext => ext.Equals(fileExtension, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return BadRequest("Invalid file format. Only JPG, JPEG, and PNG files are allowed.");
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+                var filePath = Path.Combine("path_to_save_photos", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return Ok("Photo uploaded successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred: {ex.Message}");
+            }
+            return NoContent();
+        }
+
+            [HttpGet]
         public RecipeModel[] Get()
         {
             using var db = new MyDbContext();

@@ -5,17 +5,17 @@
   font-family: "Quicksand";
 } */
 
-img {
+/* img {
   height: 200px;
   object-fit: cover;
-}
+} */
 
 ::-webkit-scrollbar {
   display: none;
 }
 
 .navbar {
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .navbar .navbarbrand {
@@ -51,11 +51,13 @@ img {
 
 .recipe-preview {
   border-radius: 12px;
-  box-shadow: 0 16px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 16px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 2px 0 rgba(0, 0, 0, 0.19);
   margin-bottom: 20px;
 }
 
 .recipe-preview img {
+  height: 200px;
+  object-fit: cover;
   border-radius: 12px 12px 0px 0;
 }
 
@@ -76,29 +78,17 @@ img {
   gap: 0.2rem;
 }
 
-.recipe-img {
-  width: 450px;
-  height: 300px;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  border: 3px solid #5e72e4;
-  margin-right: 30px;
-}
-
 .recipe-ingredient-instructions{
-  display: flex;
-  flex-direction: row;
-  width: inherit;
-  border-Top: 3px solid #5e72e4;
-  border-bottom: 3px solid #5e72e4;
-  padding: 10px;
+  border-Top: 2px solid #5e72e4;
+  border-bottom: 2px solid #5e72e4;
+  margin-top: 8px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .my-list {
   list-style: none;
   padding: 0;
-  width: 400px;
-  margin-right: 45px;
   border: 2px solid #5e72e4;
 }
 
@@ -111,16 +101,9 @@ img {
   border-bottom: none;
 }
 
-.list-instructions-wrapper {
-  padding: 0;
-  flex: 1;
-  margin-left: 30px;
-}
-
 .list-instructions {
   list-style: none;
   padding: 0;
-  list-style-position: inside;
 }
 
 .list-instructions li {
@@ -132,23 +115,12 @@ img {
   border-bottom: none;
 }
 
-.recipe-description-area{
-  position: relative;
-  width: max-content;
-  flex: content;
-}
-
 .recipe-img-edit {
   width: 450px;
   height: 300px;
   object-fit: cover;
   border-radius: 0.5rem;
   border: 3px solid #7768fc94;
-
-}
-
-.recipe-img-edit:hover {
-  box-shadow: 0px 0px 1px 1px #cbc5ff;
 }
 
 .textarea{
@@ -156,24 +128,4 @@ img {
   height: 230px;
   padding: 0px;
   border: 0px;
-}
-
-.invisable-edit{
-  border: 10px;
-  padding: 0px;
-}
-
-.invisable-edit-small{
-  border: 1px;
-  padding: 0px;
-  block-size: fit-content;
-}
-
-.header-edit{
-  height: 38.39px; 
-  margin-bottom: 8px;
-  border: 1px;
-  padding: 0px;
-  font-size: 25pt;
-  width: 100%;
 }

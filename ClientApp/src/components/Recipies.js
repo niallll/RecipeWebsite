@@ -24,13 +24,13 @@ const Recipies = () => {
     return (
         <main>
             <h2>Recipes</h2>
-                <Row>
+                <Row className="px-1">
                     {
                         (items != null) ?
                             items.map((items) => (
                                 <Col>
                                     <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
-                                        <Card style={{ width: '18rem' }} className='recipe-preview mx-2'>
+                                        <Card style={{ width: '19.5rem' }} className='recipe-preview'>
                                             <CardImg src={`${MovieImageArr.find(o => o.id === items.imageId)?.image}`} />
                                             <CardBody>
                                                 <CardTitle tag="h5">
