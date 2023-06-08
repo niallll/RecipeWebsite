@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using RankingApp.DataSets;
+using RankingApp.Entities;
 using RankingApp.DbContexts;
 
 namespace RankingApp.Services
@@ -19,13 +19,31 @@ namespace RankingApp.Services
             return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).OrderBy(r => r.Title).ToListAsync();
         }
 
-        public async Task<Recipe?> GetRecipeAsync(int id, bool includeIngredientsAndInstructions)
+        public async Task<Recipe?> GetRecipeAsync(int id)
         {
-            if(includeIngredientsAndInstructions)
-            {
-                return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).Where(r => r.Id == id).FirstOrDefaultAsync();
-            }
-            return await context.Recipes.Where(r => r.Id == id).FirstOrDefaultAsync();
+             return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).Where(r => r.Id == id).FirstOrDefaultAsync();
+        }
+
+
+        public void AddRecipe(Recipe recipe)
+        {
+            context.Recipes.Add(recipe);
+        }
+
+        public async Task<bool> SaveChangeAsync()
+        {
+            return (await context.SaveChangesAsync() >= 0);
+        }
+
+        public async void AddInstructionToRecipeAsync(int id, Instruction instruction)
+        {
+            var recipe = await GetRecipeAsync(id);
+            recipe?.Instructions.Add(instruction);
+        }
+
+        public async Task<bool> RecipeExists(int id)
+        {
+            return await context.Recipes.AnyAsync(r => r.Id == id);
         }
     }
 }

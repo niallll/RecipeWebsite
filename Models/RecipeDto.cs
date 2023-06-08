@@ -1,4 +1,4 @@
-﻿using RankingApp.DataSets;
+﻿using RankingApp.Entities;
 
 namespace RankingApp.Models
 {

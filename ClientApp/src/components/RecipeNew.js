@@ -27,17 +27,8 @@ const RecipeNew = () => {
     function EditClick() {
         const formData = new FormData();
         formData.append('photo', selectedFile);
-
-        axios.post(`recipe/photo/${id}`, formData)
-            .then((response) => {
-                console.log(response);
-                navigate(`/recipe/${recipe.id}`);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
         
-        axios.post(`recipe/${id}`, recipe)
+        axios.post(`recipe`, recipe)
             .then((response) => {
                 console.log(response);
                 navigate(`/recipe/${recipe.id}`);

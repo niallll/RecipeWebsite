@@ -9,6 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddDbContext<RecipeDbContext>();
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 

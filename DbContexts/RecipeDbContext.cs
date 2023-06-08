@@ -2,7 +2,7 @@
 using Npgsql;
 using System.Xml;
 using RankingApp.Models;
-using RankingApp.DataSets;
+using RankingApp.Entities;
 
 namespace RankingApp.DbContexts
 {

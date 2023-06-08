@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RankingApp.DataSets
+namespace RankingApp.Entities
 {
     public class Recipe
     {
@@ -16,7 +16,7 @@ namespace RankingApp.DataSets
         public int Calories { get; set; }
         public int Fat { get; set; }
         public string? Description { get; set; }
-        public ICollection<Ingredient>? Ingredients { get; set; }
-        public ICollection<Instruction>? Instructions { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; } = null!;
+        public ICollection<Instruction> Instructions { get; set; } = null!;
     }
 }

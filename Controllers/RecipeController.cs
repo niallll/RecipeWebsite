@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using RankingApp.DataSets;
+using RankingApp.Entities;
 using RankingApp.DbContexts;
 using RankingApp.Models;
 using RankingApp.Services;
 using System.Diagnostics;
 using System.Xml;
+using AutoMapper;
 
 namespace RankingApp.Controllers
 {
@@ -16,79 +17,53 @@ namespace RankingApp.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly IRecipeRepository _recipeRepository;
+        private readonly IMapper _mapper;
 
-        public RecipeController(IRecipeRepository recipeRepository)
+        public RecipeController(IRecipeRepository recipeRepository, IMapper mapper)
         {
             _recipeRepository = recipeRepository ?? throw new ArgumentNullException(nameof(recipeRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RecipeDto>>> Get()
+        {
+            var recipeEntities = await _recipeRepository.GetAllRecipesAsync();
+            return Ok(_mapper.Map<IEnumerable<RecipeDto>>(recipeEntities));
         }
 
         [HttpGet("{id:int}")]
-        public RecipeDto Get(int id)
+        public async Task<ActionResult<RecipeDto>> Get(int id)
         {
-            using (var db = new RecipeDbContext())
-            {
-                // Retrieve all MyEntities with LINQ
-                RecipeDto result = new() { };
-                Recipe[] recipes = db.Recipes.Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).Where(i => i.Id == id).ToArray();
-                recipes ??= Array.Empty<Recipe>();
-                foreach (Recipe recipe in recipes)
-                {
-                    result.Id = recipe.Id;
-                    result.Title = recipe.Title;
-                    result.Calories = recipe.Calories;
-                    result.Description = recipe.Description;
-                    result.ImageId = recipe.ImageId;
-                    result.Time = recipe.Time;
-                    
-                    List<InstructionDto> instructions = new() { };
-                    foreach (Instruction i in recipe.Instructions)
-                    {
-                        InstructionDto instructionModel = new()
-                        {
-                            Id = i.Id,
-                            InstructionText = i.InstructionText,
-                            StepNumber = i.StepNumber
-                        };
-                        instructions.Add(instructionModel);
-                    }
-                    result.Instructions = instructions;
-
-                    List<IngredientDto> ingredients = new() { };
-                    foreach (Ingredient i in recipe.Ingredients)
-                    {
-                        IngredientDto ingredientModel = new()
-                        {
-                            Id = i.Id,
-                            Name = i.Name,
-                            StepNumber = i.StepNumber 
-                        };
-                        ingredients.Add(ingredientModel);
-                    }
-                    result.Ingredients = ingredients;
-
-                    return result;
-                }
-                return result;
-            }
+            var recipeEntity = await _recipeRepository.GetRecipeAsync(id);
+            return Ok(_mapper.Map<RecipeDto>(recipeEntity));
         }
 
         [HttpPost()]
-        public async Task<IActionResult> Put(RecipeDto recipeModel)
+        public async Task<IActionResult> CreateRecipe(RecipeDto recipeModel)
         {
-            using var db = new RecipeDbContext();
-
-            Recipe a = new()
+            try
             {
-                Title = recipeModel.Title,
-                Calories = recipeModel.Calories,
-                Description = recipeModel.Description,
-                ImageId = 2,
-                Time = recipeModel.Time
-            };
+                RecipeForCreationDto createRecipe = _mapper.Map<RecipeForCreationDto>(recipeModel);
+                Recipe finalRecipe = _mapper.Map<Recipe>(createRecipe);
+                _recipeRepository.AddRecipe(finalRecipe);
 
-            db.Recipes?.Add(a);
-            await db.SaveChangesAsync();
-            return NoContent();
+                ICollection<InstructionForCreationDto> listForCreationInstruction = _mapper.Map<ICollection<InstructionForCreationDto>>(recipeModel.Instructions);
+                ICollection<Instruction> listInstruction = _mapper.Map<ICollection<Instruction>>(listForCreationInstruction);
+                finalRecipe.Instructions = listInstruction;
+
+                ICollection<IngredientForCreationDto> listForCreationIngredient = _mapper.Map<ICollection<IngredientForCreationDto>>(recipeModel.Ingredients);
+                ICollection<Ingredient> listIngredient = _mapper.Map<ICollection<Ingredient>>(listForCreationIngredient);
+                finalRecipe.Ingredients = listIngredient;
+
+                await _recipeRepository.SaveChangeAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest();
+            }
         }
 
         [HttpPost("{id:int}")]
@@ -149,27 +124,6 @@ namespace RankingApp.Controllers
 
             
             return NoContent();
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<RecipeDto>>> Get()
-        {
-            var recipeEntities = await _recipeRepository.GetAllRecipesAsync();
-            var results = new List<RecipeDto>();
-            foreach (var recipeEntity in recipeEntities)
-            {
-                results.Add(new RecipeDto
-                {
-                    Id = recipeEntity.Id,
-                    Title = recipeEntity.Title,
-                    Calories = recipeEntity.Calories,
-                    Description = recipeEntity.Description,
-                    ImageId = recipeEntity.ImageId,
-                    Time = recipeEntity.Time
-                });
-            }
-
-            return Ok(results);
         }
     }
 }
