@@ -9,6 +9,6 @@ namespace RankingApp.Services
         void AddRecipe(Recipe recipe);
         void AddInstructionToRecipeAsync(int id, Instruction instruction);
         Task<bool> RecipeExists(int id);
-        Task<bool> SaveChangeAsync();
+        Task<bool> SaveChangesAsync();
     }
 }

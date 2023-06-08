@@ -37,7 +37,7 @@ const Recipe = () => {
         //         console.log(error);
         //     });
         
-        axios.post(`recipe/${id}`, recipe)
+        axios.put(`recipe/${id}`, recipe)
             .then((response) => {
                 console.log(response);
                 navigate(`/recipe/${recipe.id}`);

@@ -40,23 +40,15 @@ namespace RankingApp.Controllers
         }
 
         [HttpPost()]
-        public async Task<IActionResult> CreateRecipe(RecipeDto recipeModel)
+        public async Task<IActionResult> CreateRecipe(RecipeForCreationDto recipeModel)
         {
             try
             {
-                RecipeForCreationDto createRecipe = _mapper.Map<RecipeForCreationDto>(recipeModel);
+                RecipeForCreationDto createRecipe = recipeModel;
                 Recipe finalRecipe = _mapper.Map<Recipe>(createRecipe);
                 _recipeRepository.AddRecipe(finalRecipe);
 
-                ICollection<InstructionForCreationDto> listForCreationInstruction = _mapper.Map<ICollection<InstructionForCreationDto>>(recipeModel.Instructions);
-                ICollection<Instruction> listInstruction = _mapper.Map<ICollection<Instruction>>(listForCreationInstruction);
-                finalRecipe.Instructions = listInstruction;
-
-                ICollection<IngredientForCreationDto> listForCreationIngredient = _mapper.Map<ICollection<IngredientForCreationDto>>(recipeModel.Ingredients);
-                ICollection<Ingredient> listIngredient = _mapper.Map<ICollection<Ingredient>>(listForCreationIngredient);
-                finalRecipe.Ingredients = listIngredient;
-
-                await _recipeRepository.SaveChangeAsync();
+                await _recipeRepository.SaveChangesAsync();
                 return NoContent();
             }
             catch (Exception ex)
@@ -66,63 +58,24 @@ namespace RankingApp.Controllers
             }
         }
 
-        [HttpPost("{id:int}")]
-        public async Task<IActionResult> Put(int id, RecipeDto recipeModel)
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> ReplaceRecipe(int id, RecipeForCreationDto recipeModel)
         {
-            using var db = new RecipeDbContext();
-            Recipe? recipe = db.Recipes?.Where(i => i.Id == id).Include(recipes => recipes.Instructions).Include(recipes => recipes.Ingredients).Where(i => i.Id == id)?.First();
-            recipe.Id = id;
-            recipe.Title = recipeModel.Title;
-            recipe.Calories = recipeModel.Calories;
-            recipe.Description = recipeModel.Description;
-            //recipe.ImageId = 2;
-            recipe.Time = recipeModel.Time;
-
-            List<Instruction> instructions = new List<Instruction> { };
-            foreach (InstructionDto i in recipeModel.Instructions)
+            if (!await _recipeRepository.RecipeExists(id))
             {
-                Instruction instruction = new()
-                {
-                    InstructionText = i.InstructionText,
-                    StepNumber = i.StepNumber,
-                    Recipe = recipe,
-                };
-                if (i.Id != -1) {
-                    instruction.Id = i.Id;
-                }
-
-                instructions.Add(instruction);
-            }
-            recipe.Instructions = instructions;
-
-            List<Ingredient> ingredients = new List<Ingredient> { };
-            foreach (IngredientDto i in recipeModel.Ingredients)
-            {
-                Ingredient ingredient = new()
-                {
-                    Name = i.Name,
-                    StepNumber = i.StepNumber,
-                    Recipe = recipe,
-                };
-                if (i.Id != -1)
-                {
-                    ingredient.Id = i.Id;
-                }
-
-                ingredients.Add(ingredient);
-            }
-            recipe.Ingredients = ingredients;
-
-            try
-            {
-                await db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
+                return NotFound();
             }
 
-            
+            var RecipeEntity = await _recipeRepository.GetRecipeAsync(id);
+            if (RecipeEntity == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(recipeModel, RecipeEntity);
+
+            await _recipeRepository.SaveChangesAsync();
+
             return NoContent();
         }
     }

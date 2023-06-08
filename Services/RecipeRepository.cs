@@ -30,7 +30,7 @@ namespace RankingApp.Services
             context.Recipes.Add(recipe);
         }
 
-        public async Task<bool> SaveChangeAsync()
+        public async Task<bool> SaveChangesAsync()
         {
             return (await context.SaveChangesAsync() >= 0);
         }
