@@ -45,5 +45,11 @@ namespace RankingApp.Services
         {
             return await context.Recipes.AnyAsync(r => r.Id == id);
         }
+
+        public async Task<string?> GetRecipeImagePathByIdAsync(int id)
+        {
+            var rec = await context.Recipes.Where(r => r.Id == id).FirstOrDefaultAsync();
+            return rec?.ImageName;
+        }
     }
 }

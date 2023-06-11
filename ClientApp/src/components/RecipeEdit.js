@@ -25,10 +25,49 @@ const Recipe = () => {
     const navigate = useNavigate();
 
     function EditClick() {
-        const formData = new FormData();
-        formData.append('photo', selectedFile);
+        let formData = new FormData();
+        formData.append('photo', selectedFile,  {headers: {
+            'Content-Type': selectedFile.type
+        }
+          });
 
-        // axios.put(`api/photo/${id}`, formData)
+        // axios.put(`photo/${id}`, formData)
+        //     .then((response) => {
+        //         console.log(response);
+        //         navigate(`/recipe/${recipe.id}`);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+        //     axios.get(`Values`)
+        //     .then((response) => {
+        //         console.log(response);
+        //         navigate(`/recipe/${recipe.id}`);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+        //     axios.get(`values`)
+        //     .then((response) => {
+        //         console.log(response);
+        //         navigate(`/recipe/${recipe.id}`);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+        //     axios.get(`api/Values`)
+        //     .then((response) => {
+        //         console.log(response);
+        //         navigate(`/recipe/${recipe.id}`);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+
+        //     axios.get(`api/values`)
         //     .then((response) => {
         //         console.log(response);
         //         navigate(`/recipe/${recipe.id}`);

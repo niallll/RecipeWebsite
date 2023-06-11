@@ -18,5 +18,6 @@ namespace RankingApp.Entities
         public string? Description { get; set; }
         public ICollection<Ingredient> Ingredients { get; set; } = null!;
         public ICollection<Instruction> Instructions { get; set; } = null!;
+        public string? ImageName { get; set; }
     }
 }

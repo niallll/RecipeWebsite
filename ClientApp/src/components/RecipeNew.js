@@ -31,7 +31,7 @@ const RecipeNew = () => {
         axios.post(`recipe`, recipe)
             .then((response) => {
                 console.log(response);
-                navigate(`/recipe`);
+                navigate(`/`);
             })
             .catch((error) => {
                 console.log(error);

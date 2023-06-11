@@ -10,5 +10,6 @@ namespace RankingApp.Services
         void AddInstructionToRecipeAsync(int id, Instruction instruction);
         Task<bool> RecipeExists(int id);
         Task<bool> SaveChangesAsync();
+        Task<string?> GetRecipeImagePathByIdAsync(int id);
     }
 }
