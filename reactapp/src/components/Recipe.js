@@ -11,15 +11,16 @@ const Recipe = () => {
 
     useEffect(() => {
         console.log(id);
-        axios.get(`api/recipe/${id}`)
-            .then((results) => {
-                console.log(results)
-                return results.data;
-            })
-            .then(data => {
-                setRecipe(data);
-            })
-            .catch(e => { console.log(e); })
+        axios.get(`https://localhost:3000/api/recipe/${id}`)
+        .then((results) => {
+            console.log(results)
+            return results.data;
+        })
+        .then(data => {
+            // console.log(data)
+            setRecipe(data);
+        })
+        .catch(e => { console.log(e); })
     }, [id]);
 
 

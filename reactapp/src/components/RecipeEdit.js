@@ -25,7 +25,17 @@ const Recipe = () => {
     const navigate = useNavigate();
 
     function EditClick() {
-        axios.put(`api/recipe/${id}`, recipe)
+        console.log(recipe);
+        let recipeToSend = {
+            calories: recipe.calories,
+            description: recipe.description,
+            ingredients: recipe.ingredients,
+            instructions: recipe.instructions,
+            time: recipe.time,
+            title: recipe.title
+        }
+        console.log(recipeToSend);
+        axios.put(`https://localhost:3000/api/recipe/${id}`, recipeToSend)
             .then((response) => {
                 console.log(response);
                 navigate(`/recipe/${recipe.id}`);
@@ -36,11 +46,12 @@ const Recipe = () => {
     }
 
     useEffect(() => {
-        axios.get(`api/recipe/${id}`)
+        axios.get(`https://localhost:3000/api/recipe/${id}`)
             .then((results) => {
                 return results.data;
             })
             .then(data => {
+                console.log(data);
                 setRecipe(data);
             })
             .catch(e => { console.log(e); }) 

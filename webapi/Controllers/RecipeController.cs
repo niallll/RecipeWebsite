@@ -59,7 +59,7 @@ namespace RankingApp.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> ReplaceRecipe(int id, [FromForm] RecipeForCreationDto recipeModel)
+        public async Task<IActionResult> ReplaceRecipe(int id, RecipeForCreationDto recipeModel)
         {
             if (!await _recipeRepository.RecipeExists(id))
             {
