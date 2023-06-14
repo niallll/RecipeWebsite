@@ -180,7 +180,11 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-/node_modules
+/reactapp/node_modules
+/reactapp/src/images
+/reactapp/src/assets
+
+/webapi/images
 
 # RIA/Silverlight projects
 Generated_Code/
