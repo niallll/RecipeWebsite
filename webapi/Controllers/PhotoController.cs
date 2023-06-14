@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.StaticFiles;
 
 namespace RankingApp.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PhotoController : ControllerBase
     {
@@ -111,13 +111,22 @@ namespace RankingApp.Controllers
                 }
 
                 var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                var filePath = Path.Combine("path_to_save_photos", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
+                var filePath = Path.Combine("images", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await photo.CopyToAsync(stream);
                 }
 
+                string? oldImage = await _recipeRepository.GetRecipeImagePathByIdAsync(id);
+                _recipeRepository.UpdateImagePathForRecipe(id, uniqueFileName);
+                await _recipeRepository.SaveChangesAsync();
+
+                var oldFilePath = Path.Combine("images", oldImage);
+                if (System.IO.File.Exists(oldFilePath))
+                {
+                    System.IO.File.Delete(oldFilePath);
+                }
                 return Ok("Photo uploaded successfully");
             }
             catch (Exception ex)

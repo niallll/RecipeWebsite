@@ -24,7 +24,6 @@ namespace RankingApp.Services
              return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).Where(r => r.Id == id).FirstOrDefaultAsync();
         }
 
-
         public void AddRecipe(Recipe recipe)
         {
             context.Recipes.Add(recipe);
@@ -50,6 +49,12 @@ namespace RankingApp.Services
         {
             var rec = await context.Recipes.Where(r => r.Id == id).FirstOrDefaultAsync();
             return rec?.ImageName;
+        }
+
+        public async void UpdateImagePathForRecipe(int id, string fileName)
+        {
+            var recipe = await GetRecipeAsync(id);
+            recipe.ImageName = fileName;
         }
     }
 }

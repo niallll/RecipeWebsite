@@ -11,5 +11,6 @@ namespace RankingApp.Services
         Task<bool> RecipeExists(int id);
         Task<bool> SaveChangesAsync();
         Task<string?> GetRecipeImagePathByIdAsync(int id);
+        void UpdateImagePathForRecipe(int id, string fileName);
     }
 }

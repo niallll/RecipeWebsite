@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
-import { Button, Col, Row, Badge, Container } from 'reactstrap';
+import { Button, Col, Row, Badge } from 'reactstrap';
 
 const Recipe = () => {
     const { id } = useParams();

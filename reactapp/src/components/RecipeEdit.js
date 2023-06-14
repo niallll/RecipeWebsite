@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import MovieImageArr from './MovieImages';
 import axios from 'axios';
 import EditInstructionIngredients from './EditInstructionIngredients';
-import { Button, Input, Form, Container, Row, Col, textarea, FormGroup, Label } from 'reactstrap';
+import { Button, Input, Form, Row, Col, FormGroup, Label } from 'reactstrap';
 
 
 const Recipe = () => {
@@ -25,24 +25,30 @@ const Recipe = () => {
     const navigate = useNavigate();
 
     function EditClick() {
-        console.log(recipe);
-        let recipeToSend = {
-            calories: recipe.calories,
-            description: recipe.description,
-            ingredients: recipe.ingredients,
-            instructions: recipe.instructions,
-            time: recipe.time,
-            title: recipe.title
-        }
-        console.log(recipeToSend);
-        axios.put(`https://localhost:3000/api/recipe/${id}`, recipeToSend)
-            .then((response) => {
-                console.log(response);
-                navigate(`/recipe/${recipe.id}`);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        console.log(selectedFile);
+
+        // axios.put(`https://localhost:3000/api/recipe/${id}`, recipe)
+        //     .then((response) => {
+        //         console.log(response);
+        //         // navigate(`/recipe/${recipe.id}`);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     });
+        let formData = new FormData();
+        formData.append("photo", selectedFile);
+        // axios.put(`https://localhost:3000/api/photo/${id}`, selectedFile , {
+        //     headers: {
+        //       'Content-Type': selectedFile.type
+        //     }
+        // })
+        axios.put(`https://localhost:3000/api/photo/${id}`, formData)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
 
     useEffect(() => {
@@ -161,7 +167,7 @@ const Recipe = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <Input type='file' onChange={handleFileChange}></Input>
+                                <Input type='file' accept="image/png, image/jpeg" onChange={handleFileChange}></Input>
                             </Col>
                         </Row>
                     </div>
