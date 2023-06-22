@@ -7,6 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\images\4c827532-592c-471a-8e73-4be867bee7ef.png" />
+    <None Include="wwwroot\images\639aef53-406e-4e8e-9d00-23f16dc706c6.jpg" />
+    <None Include="wwwroot\images\6929babb-9dc4-4bea-a87d-dc28bd463d61.png" />
+    <None Include="wwwroot\images\bbc78e74-9a55-4f4c-bb60-b8b5cc8867d1.jpg" />
+    <None Include="wwwroot\images\BoardingPass %281%29.pdf" />
+    <None Include="wwwroot\images\BoardingPass.pdf" />
+    <None Include="wwwroot\images\Burger.png" />
+    <None Include="wwwroot\images\CheeseSandwich.png" />
+    <None Include="wwwroot\images\Curry.png" />
+    <None Include="wwwroot\images\e9602c2d-43d9-45c6-88c3-8487ff7efbed.jpg" />
+    <None Include="wwwroot\images\Hotdog.png" />
+    <None Include="wwwroot\images\Lasagna.png" />
+    <None Include="wwwroot\images\movies\Godfather.png" />
+    <None Include="wwwroot\images\movies\Highlander.png" />
+    <None Include="wwwroot\images\movies\Highlander2.png" />
+    <None Include="wwwroot\images\movies\LastOfTheMohicans.png" />
+    <None Include="wwwroot\images\movies\PoliceAcademy6.png" />
+    <None Include="wwwroot\images\movies\RearWindow.png" />
+    <None Include="wwwroot\images\movies\RoadHouse.png" />
+    <None Include="wwwroot\images\movies\Shawshank.png" />
+    <None Include="wwwroot\images\movies\StarTreck4.png" />
+    <None Include="wwwroot\images\movies\Superman4.png" />
+    <None Include="wwwroot\images\Pizza.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.7" />

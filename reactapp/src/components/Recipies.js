@@ -31,7 +31,7 @@ const Recipies = () => {
                                 <Col>
                                     <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
                                         <Card style={{ width: '19.5rem' }} className='recipe-preview'>
-                                            <CardImg src={`${MovieImageArr.find(o => o.id === items.imageId)?.image}`} />
+                                            <CardImg src={`https://localhost:3000/images/${items.imageName}`} />
                                             <CardBody>
                                                 <CardTitle tag="h5">
                                                     {items.title}

@@ -21,6 +21,7 @@ const Recipe = () => {
             setRecipe(data);
         })
         .catch(e => { console.log(e); })
+
     }, [id]);
 
 
@@ -31,7 +32,8 @@ const Recipe = () => {
                     <h2>{recipe.title}</h2>
                     <Row>
                         <Col className='my-2'>
-                            <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' />
+                        <img src={`https://localhost:3000/images/${recipe.imageName}`} alt={recipe.title} className='recipe-img-edit' />
+                            {/* <img src={MovieImageArr.find(o => o.id === recipe.imageId)?.image} alt={recipe.title} className='recipe-img-edit' /> */}
                         </Col>
                         <Col className='my-2' lg="">
                             <Row className='h-90'>{recipe.description}</Row>

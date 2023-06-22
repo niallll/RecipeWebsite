@@ -12,5 +12,6 @@ namespace RankingApp.Models
         public string? Description { get; set; }
         public ICollection<IngredientDto>? Ingredients { get; set; } = new List<IngredientDto>();
         public ICollection<InstructionDto>? Instructions { get; set; } = new List<InstructionDto>();
+        public string? ImageName { get; set; }
     }
 }

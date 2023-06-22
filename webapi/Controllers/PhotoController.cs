@@ -32,6 +32,7 @@ namespace RankingApp.Controllers
             {
                 "asd", "ffafad"
             };
+
             return Ok(recipeEntities);
         }
 
@@ -43,20 +44,22 @@ namespace RankingApp.Controllers
             try
             {
                 string? ImagePath = await _recipeRepository.GetRecipeImagePathByIdAsync(id);
-                if (ImagePath == null)
+                var a = Path.Combine("wwwroot", "images", ImagePath);
+                
+                if (a == null)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                if (!System.IO.File.Exists(ImagePath))
+                if (!System.IO.File.Exists(a))
                 {
-                    return NotFound(ImagePath);
+                    return BadRequest(a);
                 };
 
-                byte[] byteArray = System.IO.File.ReadAllBytes(ImagePath);
+                byte[] byteArray = System.IO.File.ReadAllBytes(a);
 
                 //Determine the Content Type of the File.
                 string contentType = "";
-                new FileExtensionContentTypeProvider().TryGetContentType(ImagePath, out contentType);
+                new FileExtensionContentTypeProvider().TryGetContentType(a, out contentType);
                 var result2 = new FileContentResult(byteArray, contentType);
                 return Ok(result2);
 
@@ -111,7 +114,7 @@ namespace RankingApp.Controllers
                 }
 
                 var uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
-                var filePath = Path.Combine("images", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
+                var filePath = Path.Combine("wwwroot", "images", uniqueFileName); // Replace "path_to_save_photos" with the actual directory where you want to save the photos
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
