@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Col, Row, Badge } from "reactstrap";
+import RecipeImage from "./RecipeImage";
 
 const Recipe = () => {
   const { id } = useParams();
@@ -32,11 +33,7 @@ const Recipe = () => {
           <h2>{recipe.title}</h2>
           <Row>
             <Col className="my-2">
-              <img
-                src={`https://localhost:3000/images/${recipe.imageName}`}
-                alt={recipe.title}
-                className="recipe-img-edit"
-              />
+              <RecipeImage recipe={recipe} />
             </Col>
             <Col className="my-2" lg="">
               <Row className="h-90">{recipe.description}</Row>

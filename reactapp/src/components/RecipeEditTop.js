@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import { Input, Form, Row, Col, FormGroup, Label } from "reactstrap";
 import { RecipeContext } from "../contexts/RecipeContext";
+import RecipeImage from "./RecipeImage";
 
 const RecipeEditTop = () => {
   const { recipe, handleFileChange, handleRecipeChange } =
@@ -18,15 +19,7 @@ const RecipeEditTop = () => {
       <div className="my-2">
         <Row>
           <Col className="my-2">
-            {recipe.imageName != null ? (
-              <img
-                src={`https://localhost:3000/images/${recipe.imageName}`}
-                alt={recipe.title}
-                className="recipe-img-edit"
-              />
-            ) : (
-              <div>No image stored yet.</div>
-            )}
+            <RecipeImage recipe={recipe} />
           </Col>
           <Col className="my-2" lg="">
             <Input
