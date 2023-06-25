@@ -18,11 +18,15 @@ const RecipeEditTop = () => {
       <div className="my-2">
         <Row>
           <Col className="my-2">
-            <img
-              src={`https://localhost:3000/images/${recipe.imageName}`}
-              alt={recipe.title}
-              className="recipe-img-edit"
-            />
+            {recipe.imageName != null ? (
+              <img
+                src={`https://localhost:3000/images/${recipe.imageName}`}
+                alt={recipe.title}
+                className="recipe-img-edit"
+              />
+            ) : (
+              <div>No image stored yet.</div>
+            )}
           </Col>
           <Col className="my-2" lg="">
             <Input

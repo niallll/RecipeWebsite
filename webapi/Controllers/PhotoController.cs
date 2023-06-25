@@ -125,10 +125,13 @@ namespace RankingApp.Controllers
                 _recipeRepository.UpdateImagePathForRecipe(id, uniqueFileName);
                 await _recipeRepository.SaveChangesAsync();
 
-                var oldFilePath = Path.Combine("images", oldImage);
-                if (System.IO.File.Exists(oldFilePath))
+                if (oldImage != null)
                 {
-                    System.IO.File.Delete(oldFilePath);
+                    var oldFilePath = Path.Combine("images", oldImage);
+                    if (System.IO.File.Exists(oldFilePath))
+                    {
+                        System.IO.File.Delete(oldFilePath);
+                    }
                 }
                 return Ok("Photo uploaded successfully");
             }

@@ -18,9 +18,33 @@ function useRecipe(id) {
 
   const navigate = useNavigate();
 
-  function EditClick() {
-    console.log(selectedFile);
+  useEffect(() => {
+    if (id != 0) {
+      axios
+        .get(`https://localhost:3000/api/recipe/${id}`)
+        .then((results) => {
+          return results.data;
+        })
+        .then((data) => {
+          console.log(data);
+          setRecipe(data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, [id]);
 
+  function SubmitClick() {
+    if (id != 0) {
+      UpdateRecipe();
+    } else {
+      CreateRecipe();
+    }
+  }
+
+  function UpdateRecipe() {
+    //update recipe with current values
     axios
       .put(`https://localhost:3000/api/recipe/${id}`, recipe)
       .then((response) => {
@@ -29,11 +53,14 @@ function useRecipe(id) {
       .catch((error) => {
         console.log(error);
       });
+    //goto the recipe display
+    navigate(`/recipe/${recipe.id}`);
+  }
 
-    let formData = new FormData();
-    formData.append("photo", selectedFile);
+  function CreateRecipe() {
+    //update recipe with current values
     axios
-      .put(`https://localhost:3000/api/photo/${id}`, formData)
+      .post(`https://localhost:3000/api/recipe`, recipe)
       .then((response) => {
         console.log(response);
       })
@@ -41,29 +68,37 @@ function useRecipe(id) {
         console.log(error);
       });
 
-    navigate(`/recipe/${recipe.id}`);
+    //Once we return the id of new recipe we can add the selected file.
+    //UpdateImage(id);
+
+    navigate(`/recipies`);
   }
 
-  useEffect(() => {
-    axios
-      .get(`https://localhost:3000/api/recipe/${id}`)
-      .then((results) => {
-        return results.data;
-      })
-      .then((data) => {
-        console.log(data);
-        setRecipe(data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }, [id]);
-
   const handleFileChange = (event) => {
-    event.target.files[0] == undefined
-      ? setSelectedFile(null)
-      : setSelectedFile(event.target.files[0]);
+    const file = event.target.files[0];
+    console.log(file);
+    if (id === 0) {
+      file === undefined ? setSelectedFile(null) : setSelectedFile(file);
+    } else {
+      UpdateImage(id, file);
+    }
   };
+
+  function UpdateImage(recipeId, file) {
+    console.log(file);
+    if (file != null) {
+      let formData = new FormData();
+      formData.append("photo", file);
+      axios
+        .put(`https://localhost:3000/api/photo/${recipeId}`, formData)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 
   const handleNewIngredientChange = (event) => {
     const { value } = event.target;
@@ -157,7 +192,7 @@ function useRecipe(id) {
     recipe,
     newIngredient,
     newInstruction,
-    EditClick,
+    EditClick: SubmitClick,
     handleFileChange,
     handleNewIngredientChange,
     handleIngredientChange,
