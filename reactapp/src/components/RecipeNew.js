@@ -1,19 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import MovieImageArr from "./MovieImages";
 import axios from "axios";
 import RecipeEditInstructionIngredients from "./RecipeEditInstructionIngredients";
-import {
-  Button,
-  Input,
-  Form,
-  Container,
-  Row,
-  Col,
-  textarea,
-  FormGroup,
-  Label,
-} from "reactstrap";
+import { Button, Input, Form, Row, Col, FormGroup, Label } from "reactstrap";
 
 const RecipeNew = () => {
   const { id } = useParams();
@@ -156,9 +145,7 @@ const RecipeNew = () => {
             <Row>
               <Col className="my-2">
                 <img
-                  src={
-                    MovieImageArr.find((o) => o.id === recipe.imageId)?.image
-                  }
+                  src={`https://localhost:3000/images/${recipe.imageName}`}
                   alt={recipe.title}
                   className="recipe-img-edit"
                 />
