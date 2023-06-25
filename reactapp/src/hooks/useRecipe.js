@@ -101,7 +101,6 @@ function useRecipe(id) {
   }
 
   function ArchiveClick() {
-    console.log(id);
     axios
       .delete(`https://localhost:3000/api/recipe/${id}`)
       .then((response) => {
@@ -110,7 +109,8 @@ function useRecipe(id) {
       .catch((error) => {
         console.log(error);
       });
-    navigate(`/`);
+    alert("recipe archived");
+    navigate(`/fetch-recipes`);
   }
 
   const handleNewIngredientChange = (event) => {
