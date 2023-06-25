@@ -1,58 +1,72 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import MyImage from './MyImage';
-import MovieImageArr from './MovieImages';
-import { Card, CardBody, CardTitle, Col, CardText, Badge, Container, Row, CardImg } from 'reactstrap';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Col,
+  CardText,
+  Badge,
+  Row,
+  CardImg,
+} from "reactstrap";
 
 const Recipies = () => {
+  const [items, setItems] = useState(null);
 
-    const [items, setItems] = useState(null);
+  useEffect(() => {
+    fetch(`api/recipe`)
+      .then((results) => {
+        console.log(results);
+        return results.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setItems(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
-    useEffect(() => {
-        fetch(`api/recipe`)
-            .then((results) => {
-                console.log(results);
-                return results.json();
-            })
-            .then(data => {
-                console.log(data);
-                setItems(data);
-            })
-            .catch(e => { console.log(e); })
-    }, []);
-
-    return (
-        <main>
-            <h2>Recipes</h2>
-                <Row className="px-1">
-                    {
-                        (items != null) ?
-                            items.map((items) => (
-                                <Col>
-                                    <Link to={`/recipe/${items.id}`} style={{ textDecoration: 'none' }}>
-                                        <Card style={{ width: '19.5rem' }} className='recipe-preview'>
-                                            <CardImg src={`https://localhost:3000/images/${items.imageName}`} />
-                                            <CardBody>
-                                                <CardTitle tag="h5">
-                                                    {items.title}
-                                                </CardTitle>
-                                                <CardText>
-                                                    <h4>
-                                                        <Badge color='primary' className="mr-1">{items.calories} Kcal</Badge>
-                                                        <span> </span>
-                                                        <Badge color='primary' className="mr-1">{items.time} mins</Badge>
-                                                    </h4>
-                                                </CardText>
-                                            </CardBody>
-                                        </Card>
-                                    </Link>
-                                </Col>
-                            ))
-                            :
-                            <Col>Loading...</Col>
-                    }
-                </Row>
-        </main>
-    )
-}
+  return (
+    <main>
+      <h2>Recipes</h2>
+      <Row className="px-1">
+        {items != null ? (
+          items.map((items) => (
+            <Col>
+              <Link
+                to={`/recipe/${items.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <Card style={{ width: "19.5rem" }} className="recipe-preview">
+                  <CardImg
+                    src={`https://localhost:3000/images/${items.imageName}`}
+                  />
+                  <CardBody>
+                    <CardTitle tag="h5">{items.title}</CardTitle>
+                    <CardText>
+                      <h4>
+                        <Badge color="primary" className="mr-1">
+                          {items.calories} Kcal
+                        </Badge>
+                        <span> </span>
+                        <Badge color="primary" className="mr-1">
+                          {items.time} mins
+                        </Badge>
+                      </h4>
+                    </CardText>
+                  </CardBody>
+                </Card>
+              </Link>
+            </Col>
+          ))
+        ) : (
+          <Col>Loading...</Col>
+        )}
+      </Row>
+    </main>
+  );
+};
 export default Recipies;
