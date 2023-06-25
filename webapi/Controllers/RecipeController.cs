@@ -78,5 +78,25 @@ namespace RankingApp.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> ArchiveRecipe(int id)
+        {
+            if (!await _recipeRepository.RecipeExists(id))
+            {
+                return NotFound();
+            }
+
+            var RecipeEntity = await _recipeRepository.GetRecipeAsync(id);
+            if (RecipeEntity == null)
+            {
+                return NotFound();
+            }
+            RecipeEntity.IsArchived = true;
+
+            await _recipeRepository.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

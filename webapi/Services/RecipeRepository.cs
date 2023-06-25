@@ -16,12 +16,12 @@ namespace RankingApp.Services
 
         public async Task<IEnumerable<Recipe>> GetAllRecipesAsync()
         {
-            return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).OrderBy(r => r.Title).ToListAsync();
+            return await context.Recipes.Where(r => !r.IsArchived).Include(r => r.Ingredients).Include(r => r.Instructions).OrderBy(r => r.Title).ToListAsync();
         }
 
         public async Task<Recipe?> GetRecipeAsync(int id)
         {
-             return await context.Recipes.Include(r => r.Ingredients).Include(r => r.Instructions).Where(r => r.Id == id).FirstOrDefaultAsync();
+             return await context.Recipes.Where(r => !r.IsArchived).Include(r => r.Ingredients).Include(r => r.Instructions).Where(r => r.Id == id).FirstOrDefaultAsync();
         }
 
         public void AddRecipe(Recipe recipe)

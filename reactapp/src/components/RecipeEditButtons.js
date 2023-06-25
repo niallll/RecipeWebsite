@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 import { RecipeContext } from "../contexts/RecipeContext";
 
 const RecipeEditButtons = () => {
-  const { recipe, EditClick } = useContext(RecipeContext);
+  const { recipe, EditClick, ArchiveClick } = useContext(RecipeContext);
 
   return (
     <>
@@ -17,6 +17,11 @@ const RecipeEditButtons = () => {
       <Button color="success" className="m-2" onClick={EditClick}>
         Save
       </Button>
+      {recipe.id != null && (
+        <Button color="danger" className="m-2 float-end" onClick={ArchiveClick}>
+          Archive Recipe
+        </Button>
+      )}
     </>
   );
 };

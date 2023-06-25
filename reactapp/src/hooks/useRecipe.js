@@ -100,6 +100,19 @@ function useRecipe(id) {
     }
   }
 
+  function ArchiveClick() {
+    console.log(id);
+    axios
+      .delete(`https://localhost:3000/api/recipe/${id}`)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    navigate(`/`);
+  }
+
   const handleNewIngredientChange = (event) => {
     const { value } = event.target;
     setNewIngredient(value);
@@ -193,6 +206,7 @@ function useRecipe(id) {
     newIngredient,
     newInstruction,
     EditClick: SubmitClick,
+    ArchiveClick,
     handleFileChange,
     handleNewIngredientChange,
     handleIngredientChange,
