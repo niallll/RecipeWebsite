@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   AccordionItem,
   Accordion,
@@ -7,8 +7,12 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import { RecipeFilterContext } from "../contexts/RecipeFilterContext";
 
 const RecipiesFilter = () => {
+  const { maxCals, HandleCalorieFilterChange } =
+    useContext(RecipeFilterContext);
+
   const [open, setOpen] = useState("0");
   const toggle = (id) => {
     if (open === id) {
@@ -18,16 +22,8 @@ const RecipiesFilter = () => {
     }
   };
 
-  const [maxCals, setMaxCals] = useState(2000);
-
-  function change(event) {
-    const { value } = event.target;
-    console.log(value);
-    setMaxCals(value);
-  }
-
   return (
-    <Accordion open={open} toggle={toggle} className="accordian my-2">
+    <Accordion open={open} toggle={toggle} className="accordian my-4">
       <AccordionItem>
         <AccordionHeader targetId="1">Filters</AccordionHeader>
         <AccordionBody accordionId="1">
@@ -40,7 +36,7 @@ const RecipiesFilter = () => {
             min={0}
             max={2000}
             step={10}
-            onChange={change}
+            onChange={HandleCalorieFilterChange}
           />
         </AccordionBody>
       </AccordionItem>

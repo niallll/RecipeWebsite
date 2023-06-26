@@ -9,10 +9,10 @@ import {
   Badge,
   Row,
   CardImg,
-  Accordion,
-  Ac,
 } from "reactstrap";
 import RecipiesFilter from "./RecipiesFilter";
+import { RecipeFilterProvider } from "../contexts/RecipeFilterContext";
+import RecipeCards from "./RecipeCards";
 
 const Recipies = () => {
   const [items, setItems] = useState(null);
@@ -33,48 +33,11 @@ const Recipies = () => {
   }, []);
 
   return (
-    <main>
+    <RecipeFilterProvider>
       <h2>Recipes</h2>
       <RecipiesFilter></RecipiesFilter>
-      <Row className="px-1">
-        {items != null ? (
-          items.map((items) => (
-            <Col>
-              <Link
-                to={`/recipe/${items.id}`}
-                style={{ textDecoration: "none" }}
-              >
-                <Card style={{ width: "19.5rem" }} className="recipe-preview">
-                  <CardImg
-                    src={`https://localhost:3000/images/${items.imageName}`}
-                  />
-                  <CardBody>
-                    <CardTitle tag="h5">{items.title}</CardTitle>
-                    <CardText>
-                      <h4>
-                        <Badge color="primary" className="mr-1">
-                          {items.calories} Kcal
-                        </Badge>
-                        <span> </span>
-                        <Badge color="primary" className="mr-1">
-                          {items.time} mins
-                        </Badge>
-                        <span> </span>
-                        <Badge color="primary" className="mr-1">
-                          {items.servings} Servings
-                        </Badge>
-                      </h4>
-                    </CardText>
-                  </CardBody>
-                </Card>
-              </Link>
-            </Col>
-          ))
-        ) : (
-          <Col>Loading...</Col>
-        )}
-      </Row>
-    </main>
+      <RecipeCards items={items}></RecipeCards>
+    </RecipeFilterProvider>
   );
 };
 export default Recipies;
