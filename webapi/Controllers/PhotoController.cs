@@ -127,7 +127,7 @@ namespace RankingApp.Controllers
 
                 if (oldImage != null)
                 {
-                    var oldFilePath = Path.Combine("images", oldImage);
+                    var oldFilePath = Path.Combine("wwwroot", "images", oldImage);
                     if (System.IO.File.Exists(oldFilePath))
                     {
                         System.IO.File.Delete(oldFilePath);
