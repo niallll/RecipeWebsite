@@ -1,28 +1,52 @@
-import React from "react";
-import { Col } from "reactstrap";
+import React, { useState } from "react";
+import { Col, Tooltip } from "reactstrap";
 
 const RecipeNutritionBox = (props) => {
-  const { NutritionType, Amount, DailyAllowance } = props;
+  const { NutritionType, Amount, DailyAllowance, Description } = props;
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggle = () => setTooltipOpen(!tooltipOpen);
 
   return (
-    <Col className="px-0" sm="2">
-      <div
-        style={{
-          "border-style": "solid",
-          "border-width": "1px",
-          width: "76px",
-        }}
-      >
-        <h6 className="text-center">{NutritionType}</h6>
+    <>
+      <Col id={`NutritionBox${NutritionType}`} className="px-0" sm="2">
         <div
-          className="text-center mx-2"
-          style={{ "border-bottom-style": "solid", "border-width": "1px" }}
+          style={{
+            "border-style": "solid",
+            "border-width": "1px",
+            margin: "3px",
+          }}
         >
-          <h5 className="text-center">{Amount}</h5>
+          <div className="text-center">{NutritionType}</div>
+          <div
+            className="text-center mx-2"
+            style={{ "border-bottom-style": "solid", "border-width": "1px" }}
+          >
+            <h6 className="text-center">{Amount}</h6>
+          </div>
+          <h6 className="text-center">{(Amount * 100) / DailyAllowance}%</h6>
         </div>
-        <h5 className="text-center">{(Amount * 100) / DailyAllowance}%</h5>
-      </div>
-    </Col>
+      </Col>
+      <Tooltip
+        isOpen={tooltipOpen}
+        target={`NutritionBox${NutritionType}`}
+        toggle={toggle}
+        placement="bottom"
+        title={NutritionType}
+        className="veryLongTooltip"
+      >
+        <h3
+          style={{
+            color: "whitesmoke",
+            "border-bottom-style": "solid",
+            "border-width": "1px",
+          }}
+        >
+          {NutritionType}
+        </h3>
+        <h5 style={{ color: "whitesmoke" }}>{Description}</h5>
+      </Tooltip>
+    </>
   );
 };
 

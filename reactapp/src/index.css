@@ -1,15 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
 /* base styles */
-/* * {
-  font-family: "Quicksand";
-} */
-
-/* img {
-  height: 200px;
-  object-fit: cover;
-} */
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -65,7 +56,7 @@
   transform: translateY(-10px);
 }
 
-.recipe-info-boxes{
+.recipe-info-boxes {
   margin-top: 10px;
 
   border-radius: 0.5rem;
@@ -78,8 +69,8 @@
   gap: 0.2rem;
 }
 
-.recipe-ingredient-instructions{
-  border-Top: 2px solid #5e72e4;
+.recipe-ingredient-instructions {
+  border-top: 2px solid #5e72e4;
   border-bottom: 2px solid #5e72e4;
   margin-top: 8px;
   padding-top: 8px;
@@ -116,16 +107,23 @@
 }
 
 .recipe-img-edit {
-  width: 450px;
-  height: 300px;
+  width: 100%;
+  max-height: 350px;
   object-fit: cover;
   border-radius: 0.5rem;
   border: 3px solid #7768fc94;
 }
 
-.textarea{
+.textarea {
   width: 100%;
   height: 230px;
   padding: 0px;
   border: 0px;
+}
+
+.veryLongTooltip .tooltip-inner {
+  /* This will make the max-width relative to the tooltip's container, by default this is body */
+  max-width: 400px;
+  /* This will remove any limits, but should still wrap if overflowing the viewport */
+  /* max-width: none; */
 }
