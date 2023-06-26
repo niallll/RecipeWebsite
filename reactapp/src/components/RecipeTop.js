@@ -20,6 +20,9 @@ const RecipeTop = () => {
             <Col className="m-2" sm="3">
               <Badge color="primary mx-3">{recipe.time} mins</Badge>
             </Col>
+            <Col className="m-2" sm="3">
+              <Badge color="primary mx-3">{recipe.servings} servings</Badge>
+            </Col>
           </Row>
           <RecipeNutritionBoxes />
         </Col>

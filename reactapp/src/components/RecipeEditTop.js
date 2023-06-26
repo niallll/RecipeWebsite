@@ -51,6 +51,11 @@ const RecipeEditTop = () => {
           Name="time"
         />
         <RecipeEditInput
+          LabelName="Servings"
+          DefaultValue={recipe.servings}
+          Name="servings"
+        />
+        <RecipeEditInput
           LabelName="Kcal"
           DefaultValue={recipe.calories}
           Name="calories"

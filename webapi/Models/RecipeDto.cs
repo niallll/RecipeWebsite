@@ -8,6 +8,7 @@ namespace RankingApp.Models
         public string? Title { get; set; }
         public int ImageId { get; set; }
         public int Time { get; set; }
+        public int Servings { get; set; }
         public int Calories { get; set; }
         public int Fat { get; set; }
         public int Saturates { get; set; }
