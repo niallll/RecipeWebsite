@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import { Input, Form, Row, Col, FormGroup, Label } from "reactstrap";
 import { RecipeContext } from "../contexts/RecipeContext";
 import RecipeImage from "./RecipeImage";
+import RecipeEditInput from "./RecipeEditInput";
 
 const RecipeEditTop = () => {
   const { recipe, handleFileChange, handleRecipeChange } =
@@ -44,26 +45,37 @@ const RecipeEditTop = () => {
       </div>
 
       <Form className="my-3">
-        <FormGroup row>
-          <Label sm={1}>Kcal: </Label>
-          <Col sm={2}>
-            <Input
-              defaultValue={recipe.calories}
-              onChange={handleRecipeChange}
-              name="calories"
-            ></Input>
-          </Col>
-        </FormGroup>
-        <FormGroup row>
-          <Label sm={1}>Mins: </Label>
-          <Col sm={2}>
-            <Input
-              defaultValue={recipe.time}
-              onChange={handleRecipeChange}
-              name="time"
-            ></Input>
-          </Col>
-        </FormGroup>
+        <RecipeEditInput
+          LabelName="Mins"
+          DefaultValue={recipe.time}
+          Name="time"
+        />
+        <RecipeEditInput
+          LabelName="Kcal"
+          DefaultValue={recipe.calories}
+          Name="calories"
+        />
+        <RecipeEditInput LabelName="Fat" DefaultValue={recipe.fat} Name="fat" />
+        <RecipeEditInput
+          LabelName="Saturates"
+          DefaultValue={recipe.saturates}
+          Name="saturates"
+        />
+        <RecipeEditInput
+          LabelName="Sugars"
+          DefaultValue={recipe.sugars}
+          Name="sugars"
+        />
+        <RecipeEditInput
+          LabelName="Protein"
+          DefaultValue={recipe.protein}
+          Name="protein"
+        />
+        <RecipeEditInput
+          LabelName="Carbs"
+          DefaultValue={recipe.carbs}
+          Name="carbs"
+        />
       </Form>
     </>
   );

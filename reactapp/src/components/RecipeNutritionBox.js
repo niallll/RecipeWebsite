@@ -44,7 +44,7 @@ const RecipeNutritionBox = (props) => {
         >
           {NutritionType}
         </h3>
-        <h5 style={{ color: "whitesmoke" }}>{Description}</h5>
+        <h6 style={{ color: "whitesmoke" }}>{Description}</h6>
       </Tooltip>
     </>
   );

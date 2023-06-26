@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { RecipeContext } from "../contexts/RecipeContext";
 import { Col, Row, Badge } from "reactstrap";
 import RecipeImage from "./RecipeImage";
-import RecipeNutritionBox from "./RecipeNutritionBox";
 import RecipeNutritionBoxes from "./RecipeNutritionBoxes";
 
 const RecipeTop = () => {

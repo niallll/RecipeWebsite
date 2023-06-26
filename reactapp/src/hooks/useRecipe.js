@@ -45,6 +45,7 @@ function useRecipe(id) {
 
   function UpdateRecipe() {
     //update recipe with current values
+
     axios
       .put(`https://localhost:3000/api/recipe/${id}`, recipe)
       .then((response) => {
@@ -52,9 +53,10 @@ function useRecipe(id) {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .then(() => {
+        navigate(`/recipe/${recipe.id}`);
       });
-    //goto the recipe display
-    navigate(`/recipe/${recipe.id}`);
   }
 
   function CreateRecipe() {
