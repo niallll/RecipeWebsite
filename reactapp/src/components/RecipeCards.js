@@ -10,16 +10,15 @@ import {
   Row,
   CardImg,
 } from "reactstrap";
-import RecipiesFilter from "./RecipiesFilter";
 import { RecipeFilterContext } from "../contexts/RecipeFilterContext";
 
-const RecipeCards = ({ items }) => {
-  const { maxCals } = useContext(RecipeFilterContext);
+const RecipeCards = () => {
+  const { recipes, maxCals } = useContext(RecipeFilterContext);
 
   return (
     <Row className="px-1">
-      {items != null ? (
-        items.map(
+      {recipes != null ? (
+        recipes.map(
           (item) =>
             item.calories <= maxCals && (
               <Col>
