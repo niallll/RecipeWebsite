@@ -127,3 +127,7 @@
   /* This will remove any limits, but should still wrap if overflowing the viewport */
   /* max-width: none; */
 }
+
+.accordian {
+  --bs-accordion-btn-focus-box-shadow: #7768fc94;
+}

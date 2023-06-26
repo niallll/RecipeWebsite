@@ -9,7 +9,10 @@ import {
   Badge,
   Row,
   CardImg,
+  Accordion,
+  Ac,
 } from "reactstrap";
+import RecipiesFilter from "./RecipiesFilter";
 
 const Recipies = () => {
   const [items, setItems] = useState(null);
@@ -32,6 +35,7 @@ const Recipies = () => {
   return (
     <main>
       <h2>Recipes</h2>
+      <RecipiesFilter></RecipiesFilter>
       <Row className="px-1">
         {items != null ? (
           items.map((items) => (
@@ -54,6 +58,10 @@ const Recipies = () => {
                         <span> </span>
                         <Badge color="primary" className="mr-1">
                           {items.time} mins
+                        </Badge>
+                        <span> </span>
+                        <Badge color="primary" className="mr-1">
+                          {items.servings} Servings
                         </Badge>
                       </h4>
                     </CardText>
